@@ -9,6 +9,10 @@ using EntityFrameworkCoreLikeLibrary.Models;
 
 namespace TestProject.Classes
 {
+    /// <summary>
+    /// Mock up data for test. Two different methods are used
+    /// For your test use one or the other.
+    /// </summary>
     public class MockedData
     {
         protected List<Contact> ReadContacts()

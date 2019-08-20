@@ -98,16 +98,16 @@ namespace TestProject
         {
             var customers = CustomersList();
 
-            var startsWithToken = "%_a";
+            var endsWithToken = "%_a";
 
             var endsWithResults = customers
                 .Where(customer => Functions.Like(
                     customer.CompanyName,
-                    startsWithToken))
+                    endsWithToken))
                 .ToList();
 
             Assert.IsTrue(endsWithResults.Count == 2,
-                "Expected 2 customers for Like starts with");
+                "Expected 2 customers for Like ends with");
 
         }
 
@@ -138,6 +138,21 @@ namespace TestProject
             var contacts = ContactList();
             Assert.IsTrue(contacts.Any(contact => contact.ContactIdentifier != 0),
                 "Expected all new contacts to have a primary key");
+        }
+        [TestMethod]
+        public void ContactsLastNameStartsWithTest()
+        {
+            var contacts = ContactList();
+            var startsWithToken = "Cr%";
+
+            var startsWithResults = contacts
+                .Where(contact => Functions.Like(
+                    contact.LastName,
+                    startsWithToken))
+                .ToList();
+
+            Assert.IsTrue(startsWithResults.Count == 4,
+                "Expected 4 customers for Like starts with");
         }
 
     }
