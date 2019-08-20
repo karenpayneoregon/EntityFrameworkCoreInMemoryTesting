@@ -56,10 +56,11 @@ namespace EntityFrameworkCoreLikeLibrary.Models
                  */
                 var connectionString = $"Server={serverName};Database=NorthWindAzure2;Trusted_Connection=True;";
 
-                optionsBuilder.UseSqlServer(
-                    $"Server={serverName};Database=EFProviders.InMemory;Trusted_Connection=True;ConnectRetryCount=0");
+
 
 #if (EFC_LOG_ENABLED_InMemory)
+                optionsBuilder.UseSqlServer(
+                    $"Server={serverName};Database=EFProviders.InMemory;Trusted_Connection=True;ConnectRetryCount=0");
                 optionsBuilder.UseLoggerFactory(GetLoggerFactory())
                     .EnableSensitiveDataLogging()
                     .UseSqlServer(connectionString);
