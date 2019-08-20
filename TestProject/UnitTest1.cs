@@ -132,5 +132,13 @@ namespace TestProject
 
         }
 
+        [TestMethod]
+        public void ContactsAddRangTest()
+        {
+            var contacts = ContactList();
+            Assert.IsTrue(contacts.Any(contact => contact.ContactIdentifier != 0),
+                "Expected all new contacts to have a primary key");
+        }
+
     }
 }

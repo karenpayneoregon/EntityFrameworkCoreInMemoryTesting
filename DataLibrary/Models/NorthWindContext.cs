@@ -44,6 +44,11 @@ namespace EntityFrameworkCoreLikeLibrary.Models
             if (!optionsBuilder.IsConfigured)
             {
                 var serverName = Environment.UserName == "paynek" ? ".\\SQLEXPRESS" : "KARENS-PC";
+
+                /*
+                 * For production or live testing with the database, not InMemory test
+                 * use this connection string in UseSqlServer
+                 */
                 var connectionString = $"Server={serverName};Database=NorthWindAzure2;Trusted_Connection=True;";
 
                 optionsBuilder.UseSqlServer(
