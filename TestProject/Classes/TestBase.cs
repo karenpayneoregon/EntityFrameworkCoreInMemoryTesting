@@ -64,10 +64,66 @@ namespace TestProject.Classes
 
             using (var context = new NorthWindContext(options))
             {
+                context.Contact.Clear();
+                context.SaveChanges();
+
                 context.Contact.AddRange(MockedContacts());
-                var saveCount = context.SaveChanges();
+                context.SaveChanges();
+
                 return context.Contact.ToList();
 
+            }
+        }
+        /// <summary>
+        /// Remove customer, mark contact as not in use
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>
+        /// All mockups must be saved before performing
+        /// the customer remove operation.
+        /// </remarks>
+        public bool DeleteCustomer()
+        {
+            var options = new DbContextOptionsBuilder<NorthWindContext>()
+                .UseInMemoryDatabase(databaseName: "Remove_Customer_to_database")
+                .Options;
+
+            using (var context = new NorthWindContext(options))
+            {
+                /*
+                 * Mock-up tables
+                 */
+                context.Customers.AddRange(MockedCustomers());
+                context.Contact.AddRange(PrepareContacts());
+                context.SaveChanges();
+
+                /*
+                 * Find customer and contact
+                 */
+                var customer = context.Customers.FirstOrDefault(
+                    cust => cust.CompanyName == "Around the Horn");
+
+                var contact = context.Contact.FirstOrDefault(
+                    con => con.ContactIdentifier == customer.ContactIdentifier);
+
+                var contactIdentifier = contact.ContactIdentifier;
+
+                context.Entry(customer).State = EntityState.Modified;
+
+                context.SaveChanges();
+
+                context.Customers.Remove(customer);
+                contact.InUse = false;
+
+                context.SaveChanges();
+
+                customer = context.Customers.FirstOrDefault(
+                    cust => cust.CompanyName == "Around the Horn");
+
+                contact = context.Contact.FirstOrDefault(
+                    con => con.ContactIdentifier == contactIdentifier);
+
+                return customer == null && contact.InUse == false;
             }
         }
 

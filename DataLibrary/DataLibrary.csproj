@@ -137,7 +137,6 @@
     <Compile Include="Models\Customers.cs" />
     <Compile Include="Models\NorthWindContext.cs" />
     <Compile Include="Models\PhoneType.cs" />
-    <Compile Include="Operations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -13,13 +13,15 @@ namespace TestProject
     [TestClass(), TestCategory("SQL-Server provider InMemory")]
     public class UnitTest1 : TestBase
     {
-        private List<Contact> _ContactList;
+        private List<Contact> _contactList; 
 
         [TestInitialize]
         public void Init()
         {
-            if (TestContext.TestName != "ContactsLastNameStartsWithTest") return;
-            _ContactList = PrepareContacts();
+            if (TestContext.TestName == "ContactsLastNameStartsWithTest" )
+            {
+                _contactList = PrepareContacts();
+            }
         }
 
         [ClassInitialize()]
@@ -63,7 +65,7 @@ namespace TestProject
             }
         }
         [TestMethod]
-        public void CustomersAddRangTest()
+        public void CustomersAddRangeTest()
         {
             var customers = CustomersList();
 
@@ -73,6 +75,13 @@ namespace TestProject
             Assert.IsTrue(customers.Any(customer => customer.CustomerIdentifier != 0),
                 "Expected all new customers to have a primary key");
         }
+
+        [TestMethod]
+        public void RemoveCustomerSetContactNotInUse()
+        {
+            Assert.IsTrue(DeleteCustomer());
+        }
+
         /// <summary>
         /// Working with Like condition starts-with
         /// </summary>
@@ -139,7 +148,7 @@ namespace TestProject
         {
             var startsWithToken = "Cr%";
 
-            var startsWithResults = _ContactList
+            var startsWithResults = _contactList
                 .Where(contact => Functions.Like(
                     contact.LastName,
                     startsWithToken))
@@ -148,6 +157,8 @@ namespace TestProject
             Console.WriteLine(startsWithResults.Count);
             Assert.IsTrue(startsWithResults.Count == 4,
                 "Expected 4 contacts for Like starts with");
+
+            _contactList = null;
         }
 
     }

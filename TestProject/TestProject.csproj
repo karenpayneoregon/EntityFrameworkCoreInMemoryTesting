@@ -120,6 +120,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\EntityExtensions.cs" />
     <Compile Include="Classes\MockedData.cs" />
     <Compile Include="Classes\TestBase.cs" />
     <Compile Include="UnitTest1.cs" />
