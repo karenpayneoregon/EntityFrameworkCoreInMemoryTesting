@@ -9,31 +9,30 @@ using EntityFrameworkCoreLikeLibrary.Models;
 
 namespace TestProject.Classes
 {
+    
     /// <summary>
     /// Mock up data for test. Two different methods are used
     /// For your test use one or the other.
     /// </summary>
     public class MockedData
     {
-        protected List<Contact> ReadContacts()
+        public List<Contact> ContactList { get; set; } 
+        protected List<Contact> MockedContacts()
         {
-            var contacts = new List<Contact>();
             var fileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "contacts.txt");
             var fileContents = File.ReadAllLines(fileName);
 
-            foreach (var line in fileContents)
-            {
-                var fields = line.Split(',');
-                contacts.Add(new Contact()
+            var contacts = fileContents.Select(line => line.Split(',')).
+                Select(fields => new Contact()
                 {
                     FirstName = fields[1],
                     LastName = fields[2],
                     ModifiedDate = Convert.ToDateTime(fields[3]),
                     InUse = Convert.ToInt32(fields[4]) != 0
-                });
-            }
+                }).ToList();
 
             return contacts;
+
         }
 
         /// <summary>

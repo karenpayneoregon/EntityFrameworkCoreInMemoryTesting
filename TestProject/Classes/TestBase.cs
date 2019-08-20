@@ -56,7 +56,7 @@ namespace TestProject.Classes
             }
         }
 
-        public List<Contact> ContactList()
+        public List<Contact> PrepareContacts()
         {
             var options = new DbContextOptionsBuilder<NorthWindContext>()
                 .UseInMemoryDatabase(databaseName: "Add_Contacts_to_database")
@@ -64,9 +64,8 @@ namespace TestProject.Classes
 
             using (var context = new NorthWindContext(options))
             {
-                context.Contact.AddRange(ReadContacts());
-                context.SaveChanges();
-
+                context.Contact.AddRange(MockedContacts());
+                var saveCount = context.SaveChanges();
                 return context.Contact.ToList();
 
             }

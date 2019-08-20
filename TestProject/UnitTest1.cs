@@ -13,10 +13,13 @@ namespace TestProject
     [TestClass(), TestCategory("SQL-Server provider InMemory")]
     public class UnitTest1 : TestBase
     {
+        private List<Contact> _ContactList;
+
         [TestInitialize]
         public void Init()
         {
-            Console.WriteLine(TestContext.TestName);
+            if (TestContext.TestName != "ContactsLastNameStartsWithTest") return;
+            _ContactList = PrepareContacts();
         }
 
         [ClassInitialize()]
@@ -131,28 +134,20 @@ namespace TestProject
                 "Expected 5 customers for Like starts with");
 
         }
-
-        [TestMethod]
-        public void ContactsAddRangTest()
-        {
-            var contacts = ContactList();
-            Assert.IsTrue(contacts.Any(contact => contact.ContactIdentifier != 0),
-                "Expected all new contacts to have a primary key");
-        }
         [TestMethod]
         public void ContactsLastNameStartsWithTest()
         {
-            var contacts = ContactList();
             var startsWithToken = "Cr%";
 
-            var startsWithResults = contacts
+            var startsWithResults = _ContactList
                 .Where(contact => Functions.Like(
                     contact.LastName,
                     startsWithToken))
                 .ToList();
 
+            Console.WriteLine(startsWithResults.Count);
             Assert.IsTrue(startsWithResults.Count == 4,
-                "Expected 4 customers for Like starts with");
+                "Expected 4 contacts for Like starts with");
         }
 
     }

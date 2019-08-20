@@ -43,6 +43,11 @@ namespace EntityFrameworkCoreLikeLibrary.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
+                /*
+                 * Modify for your environment.
+                 * This is setup to run on one of two computers.
+                 * For most developers this will be one server.
+                 */
                 var serverName = Environment.UserName == "paynek" ? ".\\SQLEXPRESS" : "KARENS-PC";
 
                 /*
@@ -54,7 +59,7 @@ namespace EntityFrameworkCoreLikeLibrary.Models
                 optionsBuilder.UseSqlServer(
                     $"Server={serverName};Database=EFProviders.InMemory;Trusted_Connection=True;ConnectRetryCount=0");
 
-#if (EFC_LOG_ENABLED)
+#if (EFC_LOG_ENABLED_InMemory)
                 optionsBuilder.UseLoggerFactory(GetLoggerFactory())
                     .EnableSensitiveDataLogging()
                     .UseSqlServer(connectionString);
