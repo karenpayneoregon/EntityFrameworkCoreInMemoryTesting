@@ -11,7 +11,7 @@ namespace EntityFrameworkCoreLikeLibrary.Models
         public Contact()
         {
             ContactContactDevices = new HashSet<ContactContactDevices>();
-            Customers = new HashSet<Customers>();
+            Customers = new HashSet<Customer>();
         }
 
         [Key]
@@ -25,6 +25,6 @@ namespace EntityFrameworkCoreLikeLibrary.Models
         [InverseProperty("ContactIdentifierNavigation")]
         public virtual ICollection<ContactContactDevices> ContactContactDevices { get; set; }
         [InverseProperty("ContactIdentifierNavigation")]
-        public virtual ICollection<Customers> Customers { get; set; }
+        public virtual ICollection<Customer> Customers { get; set; }
     }
 }

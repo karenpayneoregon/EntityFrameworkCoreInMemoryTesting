@@ -134,9 +134,11 @@
     <Compile Include="Models\ContactContactDevices.cs" />
     <Compile Include="Models\ContactType.cs" />
     <Compile Include="Models\Countries.cs" />
-    <Compile Include="Models\Customers.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\ICustomer.cs" />
     <Compile Include="Models\NorthWindContext.cs" />
     <Compile Include="Models\PhoneType.cs" />
+    <Compile Include="Models\SqlCustomerData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

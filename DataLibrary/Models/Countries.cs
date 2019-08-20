@@ -10,7 +10,7 @@ namespace EntityFrameworkCoreLikeLibrary.Models
     {
         public Countries()
         {
-            Customers = new HashSet<Customers>();
+            Customers = new HashSet<Customer>();
         }
 
         [Column("id")]
@@ -18,6 +18,6 @@ namespace EntityFrameworkCoreLikeLibrary.Models
         public string CountryName { get; set; }
 
         [InverseProperty("CountryIdentfierNavigation")]
-        public virtual ICollection<Customers> Customers { get; set; }
+        public virtual ICollection<Customer> Customers { get; set; }
     }
 }

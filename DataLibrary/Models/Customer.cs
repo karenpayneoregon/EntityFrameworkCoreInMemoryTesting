@@ -5,7 +5,8 @@ using EntityFrameworkCoreLikeLibrary.Models;
 
 namespace DataLibrary.Models
 {
-    public partial class Customers
+    [Table("Customers")]
+    public partial class Customer
     {
         public int CustomerIdentifier { get; set; }
         [Required]
@@ -35,5 +36,6 @@ namespace DataLibrary.Models
         [ForeignKey("CountryIdentfier")]
         [InverseProperty("Customers")]
         public virtual Countries CountryIdentfierNavigation { get; set; }
+
     }
 }

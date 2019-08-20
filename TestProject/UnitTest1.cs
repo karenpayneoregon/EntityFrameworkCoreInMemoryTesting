@@ -48,7 +48,7 @@ namespace TestProject
                 };
                 context.Entry(contact).State = EntityState.Added;
 
-                var customer = new Customers()
+                var customer = new Customer()
                 {
                     CompanyName = "Karen's coffee shop",
                     ContactIdentifierNavigation = contact,

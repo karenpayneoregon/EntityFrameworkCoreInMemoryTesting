@@ -36,7 +36,7 @@ namespace EntityFrameworkCoreLikeLibrary.Models
         public virtual DbSet<ContactContactDevices> ContactContactDevices { get; set; }
         public virtual DbSet<ContactType> ContactType { get; set; }
         public virtual DbSet<Countries> Countries { get; set; }
-        public virtual DbSet<Customers> Customers { get; set; }
+        public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<PhoneType> PhoneType { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -97,7 +97,7 @@ namespace EntityFrameworkCoreLikeLibrary.Models
                     .HasConstraintName("FK_ContactContactDevices_PhoneType");
             });
 
-            modelBuilder.Entity<Customers>(entity =>
+            modelBuilder.Entity<Customer>(entity =>
             {
                 entity.HasKey(e => e.CustomerIdentifier)
                     .HasName("PK_Customers_1");

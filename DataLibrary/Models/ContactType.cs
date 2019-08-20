@@ -10,7 +10,7 @@ namespace EntityFrameworkCoreLikeLibrary.Models
     {
         public ContactType()
         {
-            Customers = new HashSet<Customers>();
+            Customers = new HashSet<Customer>();
         }
 
         [Key]
@@ -18,7 +18,7 @@ namespace EntityFrameworkCoreLikeLibrary.Models
         public string ContactTitle { get; set; }
 
         [InverseProperty("ContactTypeIdentifierNavigation")]
-        public virtual ICollection<Customers> Customers { get; set; }
+        public virtual ICollection<Customer> Customers { get; set; }
 
         public override string ToString()
         {

@@ -30,7 +30,7 @@ namespace TestProject.Classes
         /// populate all properties.
         /// </summary>
         /// <returns></returns>
-        public List<Customers> CustomersList()
+        public List<Customer> CustomersList()
         {
             var options = new DbContextOptionsBuilder<NorthWindContext>()
                 .UseInMemoryDatabase(databaseName: "Add_Customers_to_database")
