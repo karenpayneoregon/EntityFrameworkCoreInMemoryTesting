@@ -25,6 +25,7 @@ namespace TestProject.Classes
         }
 
         public static IList<TestContext> TestResults;
+
         /// <summary>
         /// Create a in memory representation of the customer table which does not
         /// populate all properties.
@@ -55,7 +56,12 @@ namespace TestProject.Classes
                 return customers;
             }
         }
-
+        /// <summary>
+        /// Setup in memory contacts.
+        /// Note context.Contact.Clear(), without this had some
+        /// strange things happen, will look deeper into this.
+        /// </summary>
+        /// <returns></returns>
         public List<Contact> PrepareContacts()
         {
             var options = new DbContextOptionsBuilder<NorthWindContext>()
@@ -106,22 +112,25 @@ namespace TestProject.Classes
                 var contact = context.Contact.FirstOrDefault(
                     con => con.ContactIdentifier == customer.ContactIdentifier);
 
-                var contactIdentifier = contact.ContactIdentifier;
+                if (contact != null)
+                {
+                    var contactIdentifier = contact.ContactIdentifier;
 
-                context.Entry(customer).State = EntityState.Modified;
+                    context.Entry(customer).State = EntityState.Modified;
 
-                context.SaveChanges();
+                    context.SaveChanges();
 
-                context.Customers.Remove(customer);
-                contact.InUse = false;
+                    context.Customers.Remove(customer);
+                    contact.InUse = false;
 
-                context.SaveChanges();
+                    context.SaveChanges();
 
-                customer = context.Customers.FirstOrDefault(
-                    cust => cust.CompanyName == "Around the Horn");
+                    customer = context.Customers.FirstOrDefault(
+                        cust => cust.CompanyName == "Around the Horn"); 
 
-                contact = context.Contact.FirstOrDefault(
-                    con => con.ContactIdentifier == contactIdentifier);
+                    contact = context.Contact.FirstOrDefault(
+                        con => con.ContactIdentifier == contactIdentifier);
+                }
 
                 return customer == null && contact.InUse == false;
             }
