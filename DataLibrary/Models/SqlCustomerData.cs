@@ -10,22 +10,22 @@ namespace DataLibrary.Models
 {
     public class SqlCustomerData : ICustomer
     {
-        private readonly NorthWindContext _context;
+        public NorthWindContext Context;
 
-        public SqlCustomerData(NorthWindContext pNorthWindContext)
+        public SqlCustomerData()
         {
-            _context = pNorthWindContext;
+            Context = new NorthWindContext();
         }
 
         public Customer Add(Customer pCustomers)
         {
-            _context.Add(pCustomers);
+            Context.Add(pCustomers);
             return pCustomers;
         }
 
         public int Commit()
         {
-            return _context.SaveChanges();
+            return Context.SaveChanges();
         }
 
         public Customer Delete(int id)
@@ -34,7 +34,7 @@ namespace DataLibrary.Models
 
             if (customer != null)
             {
-                _context.Customers.Remove(customer);
+                Context.Customers.Remove(customer);
             }
 
             return customer;
@@ -43,12 +43,12 @@ namespace DataLibrary.Models
 
         public Customer GetById(int id)
         {
-            return _context.Customers.Find(id);
+            return Context.Customers.Find(id);
         }
 
         public Customer Update(Customer pCustomers)
         {
-            var entity = _context.Attach(pCustomers);
+            var entity = Context.Attach(pCustomers);
             entity.State = EntityState.Modified;
             return pCustomers;
         }

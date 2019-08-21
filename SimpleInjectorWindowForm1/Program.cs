@@ -20,23 +20,8 @@ namespace SimpleInjectorWindowForm1
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Bootstrap();
-            //Application.Run(CustomerContainer.GetInstance<Form1>());
             Application.Run(new Form1());
         }
-        private static void Bootstrap()
-        {
-            // Create the container as usual.
-            CustomerContainer = new Container();
-
-            // Register your types, for instance:
-            CustomerContainer.Register<ICustomer, InMemoryCustomerData>(Lifestyle.Singleton);
-            //container.Register<ICustomer, InMemoryCustomerData>();
-
-            //container.Register<Form1>();
-
-            // Optionally verify the container.
-            CustomerContainer.Verify();
-        }
+       
     }
 }

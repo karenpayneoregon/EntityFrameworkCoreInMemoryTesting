@@ -25,11 +25,20 @@ namespace SimpleInjectorWindowForm1
 
             CustomerContainer = new Container();
             CustomerContainer
-                .Register<ICustomer, InMemoryCustomerData>(Lifestyle.Singleton);
-        }
+                .Register<ICustomer, SqlCustomerData>(Lifestyle.Singleton);
 
+            CustomerContainer.Verify();
+        }
+        /// <summary>
+        /// First time executed takes an expected hit on EF Core side.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GetCustomerByIdentifierButton_Click(object sender, EventArgs e)
         {
+            /*
+             * See https://simpleinjector.readthedocs.io/en/latest/lifetimes.html?highlight=beginscope
+             */
             using (AsyncScopedLifestyle.BeginScope(CustomerContainer))
             {
                 var customerInstance = CustomerContainer.GetInstance<ICustomer>();
@@ -37,6 +46,7 @@ namespace SimpleInjectorWindowForm1
                 var customer = customerInstance.GetById(2);
                 if (customer != null)
                 {
+                    // ReSharper disable once LocalizableElement
                     MessageBox.Show($"Company name {customer.CompanyName}");
                 }
             }
