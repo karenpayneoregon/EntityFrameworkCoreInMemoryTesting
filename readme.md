@@ -9,3 +9,8 @@ Simple Injector was picked from a handfull of open source libaries which means i
 
 ### Unit test
 All unit test use [InMemory data provider](https://docs.microsoft.com/en-us/ef/core/providers/in-memory/).
+
+### Important
+EF’s in-memory database isn’t a relational database so it does not enforce constaints that a real database would.
+
+A bit slower and more work to setup but is a real database consider SQLLite In-Memory.
