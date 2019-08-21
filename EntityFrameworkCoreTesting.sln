@@ -17,6 +17,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		script.sql = script.sql
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windows Forms", "Windows Forms", "{0B5100FA-A12D-4E96-8FED-A7E59E5D086B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleInjectorWindowForm1", "SimpleInjectorWindowForm1\SimpleInjectorWindowForm1.csproj", "{6C905C54-19BA-44B2-A605-1DAE25151B41}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +35,10 @@ Global
 		{F1B4315D-497C-4E2D-A26C-BC1A5E161E86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1B4315D-497C-4E2D-A26C-BC1A5E161E86}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1B4315D-497C-4E2D-A26C-BC1A5E161E86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C905C54-19BA-44B2-A605-1DAE25151B41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C905C54-19BA-44B2-A605-1DAE25151B41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C905C54-19BA-44B2-A605-1DAE25151B41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C905C54-19BA-44B2-A605-1DAE25151B41}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -38,6 +46,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{68ECA88E-A1C1-4439-AD8E-32BFF8E94562} = {1BF7DEB9-6CBA-4DD5-A5B6-086A7F5CAC29}
 		{F1B4315D-497C-4E2D-A26C-BC1A5E161E86} = {60623E67-3F39-4A78-B00C-56C8511671BB}
+		{6C905C54-19BA-44B2-A605-1DAE25151B41} = {0B5100FA-A12D-4E96-8FED-A7E59E5D086B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EEEF22E4-E573-48EE-A6BA-78C14940BC8C}

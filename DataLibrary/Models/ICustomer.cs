@@ -2,9 +2,29 @@
 {
     public interface ICustomer
     {
+        /// <summary>
+        /// Get Customer by primary key
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         Customer GetById(int id);
-        Customer Update(Customer pCustomers);
-        Customer Add(Customer pCustomers);
+        /// <summary>
+        /// Update customer
+        /// </summary>
+        /// <param name="pCustomer"></param>
+        /// <returns></returns>
+        Customer Update(Customer pCustomer);
+        /// <summary>
+        /// Add a new customer
+        /// </summary>
+        /// <param name="pCustomer"></param>
+        /// <returns></returns>
+        Customer Add(Customer pCustomer);
+        /// <summary>
+        /// Remove customer by primary key
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         Customer Delete(int id);
         int Commit();
     }
