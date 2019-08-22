@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
 
 
 namespace EntityFrameworkCoreLikeLibrary.Models
@@ -22,6 +23,7 @@ namespace EntityFrameworkCoreLikeLibrary.Models
             return consoleLoggerSqlOnlyFactory.BuildServiceProvider()
                 .GetService<ILoggerFactory>();
         }
+
 
         public NorthWindContext()
         {

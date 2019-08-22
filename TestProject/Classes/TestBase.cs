@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DataLibrary.Models;
 using EntityFrameworkCoreLikeLibrary.Models;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -31,7 +32,7 @@ namespace TestProject.Classes
         /// populate all properties.
         /// </summary>
         /// <returns></returns>
-        public List<Customer> CustomersList()
+        public List<Customer> CustomersInMemoryList()
         {
             var options = new DbContextOptionsBuilder<NorthWindContext>()
                 .UseInMemoryDatabase(databaseName: "Add_Customers_to_database")
@@ -39,7 +40,7 @@ namespace TestProject.Classes
 
             using (var context = new NorthWindContext(options))
             {
-                var customers = MockedCustomers();
+                var customers = MockedInMemoryCustomers();
 
                 /*
                  * Using InMemory default values are not done so modified date must be done here
@@ -99,7 +100,7 @@ namespace TestProject.Classes
                 /*
                  * Mock-up tables
                  */
-                context.Customers.AddRange(MockedCustomers());
+                context.Customers.AddRange(MockedInMemoryCustomers());
                 context.Contact.AddRange(PrepareContacts());
                 context.SaveChanges();
 
@@ -134,6 +135,23 @@ namespace TestProject.Classes
 
                 return customer == null && contact.InUse == false;
             }
+        }
+
+        public DbContextOptions<NorthWindContext> ContextInMemoryOptions(string pName)
+        {
+            var options = new DbContextOptionsBuilder<NorthWindContext>()
+                .UseInMemoryDatabase(databaseName: pName)
+                .Options;
+
+            return options;
+        }
+        public DbContextOptions<NorthWindContext> ContextSqlLiteOptions(SqliteConnection pConnection)  
+        {
+            var options = new DbContextOptionsBuilder<NorthWindContext>()
+                .UseSqlite(pConnection)
+                .Options;
+
+            return options;
         }
 
     }

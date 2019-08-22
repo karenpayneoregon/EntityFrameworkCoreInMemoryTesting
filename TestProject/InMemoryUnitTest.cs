@@ -10,8 +10,8 @@ using static Microsoft.EntityFrameworkCore.EF;
 
 namespace TestProject
 {
-    [TestClass(), TestCategory("SQL-Server provider InMemory")]
-    public class UnitTest1 : TestBase
+    [TestClass(), TestCategory("InMemory")]
+    public class InMemoryUnitTest : TestBase
     {
         private List<Contact> _contactList; 
 
@@ -67,7 +67,7 @@ namespace TestProject
         [TestMethod]
         public void CustomersAddRangeTest()
         {
-            var customers = CustomersList();
+            var customers = CustomersInMemoryList();
 
             Assert.IsTrue(customers.Count == 20, 
                 "Expected to have 20 customer");
@@ -75,7 +75,36 @@ namespace TestProject
             Assert.IsTrue(customers.Any(customer => customer.CustomerIdentifier != 0),
                 "Expected all new customers to have a primary key");
         }
+        [TestMethod]
+        public void CustomersUpdateTest()
+        {
 
+            using (var context = new NorthWindContext(ContextInMemoryOptions("Modify_Customer_to_database")))
+            {
+                var customer = new Customer()
+                {
+                    ContactIdentifier = 1,
+                    CustomerIdentifier = 1,
+                    CompanyName = "ABC",
+                    CountryIdentfier = 9
+                };
+
+                context.Customers.Add(customer);
+                context.SaveChanges();
+
+                var companyNameNew = "DEF";
+                customer.CompanyName = companyNameNew;
+                context.Customers.Update(customer);
+                context.SaveChanges();
+
+                var customerModified = context.Customers.Find(customer.CustomerIdentifier);
+                Assert.IsTrue(customerModified.CompanyName == companyNameNew);
+
+            }
+
+
+
+        }
         [TestMethod]
         public void RemoveCustomerSetContactNotInUse()
         {
@@ -88,7 +117,7 @@ namespace TestProject
         [TestMethod]
         public void CustomersLikeConditionStartsWithTest()
         {
-            var customers = CustomersList();
+            var customers = CustomersInMemoryList();
 
             var startsWithToken = "Fr%";
 
@@ -108,7 +137,7 @@ namespace TestProject
         [TestMethod]
         public void CustomersLikeConditionEndsWithTest()
         {
-            var customers = CustomersList();
+            var customers = CustomersInMemoryList();
 
             var endsWithToken = "%_a";
 
@@ -129,7 +158,7 @@ namespace TestProject
         [TestMethod]
         public void CustomersLikeConditionContainsTest() 
         {
-            var customers = CustomersList();
+            var customers = CustomersInMemoryList();
 
             var containsWithToken = "%en%";
 

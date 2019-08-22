@@ -36,10 +36,10 @@ namespace TestProject.Classes
         }
 
         /// <summary>
-        /// Mocked up customers for various test
+        /// Mocked up customers for various in-memory test
         /// </summary>
         /// <returns></returns>
-        protected static List<Customer> MockedCustomers()
+        protected static List<Customer> MockedInMemoryCustomers()
         {
             var customers = new List<Customer>()
             {
@@ -65,6 +65,35 @@ namespace TestProject.Classes
                 new Customer() {CompanyName = "Furia Bacalhau e Frutos do Mar", ContactIdentifier = 25, ContactTypeIdentifier = 11,CountryIdentfier = 15}
             };
 
+            return customers;
+
+        }
+
+        protected List<Countries> GetCountriesForSqlLite()
+        {
+            var nameList = new List<string>() { "Argentina", "Austria", "Belgium", "Brazil", "Canada", "Denmark", "Finland", "France", "Germany", "Ireland", "Italy", "Mexico", "Norway", "Poland", "Portugal", "Spain", "Sweden", "Switzerland", "UK", "USA","Venezuela" };
+            var countries = nameList.Select(cn => new Countries() {CountryName = cn});
+            return countries.ToList();
+        }
+
+        /// <summary>
+        /// Mocked up customers for various in-memory test
+        /// </summary>
+        /// <returns></returns>
+        protected static List<Customer> MockedSqlLiteCustomers()
+        {
+            var customers = new List<Customer>()
+            {
+                new Customer() {CompanyName = "Ana Trujillo Emparedados y helados", CountryIdentfier = 1},
+                new Customer() {CompanyName = "Antonio Moreno Taquería", CountryIdentfier = 9},
+                new Customer() {CompanyName = "Around the Horn", CountryIdentfier = 9},
+                new Customer() {CompanyName = "Berglunds snabbköp", CountryIdentfier = 8}
+            };
+
+            for (var index = 0; index < customers.Count; index++)
+            {
+                customers[index].ModifiedDate = DateTime.Now;
+            }
             return customers;
 
         }
