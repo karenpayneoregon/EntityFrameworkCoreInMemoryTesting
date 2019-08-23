@@ -148,7 +148,7 @@ namespace TestProject
 
                 var companyNameNew = "DEF";
                 customer.CompanyName = companyNameNew;
-                context.Customers.Update(customer);
+                context.Customers.Update(customer); // <<---new for EF Core
                 context.SaveChanges();
 
                 var customerModified = context.Customers.Find(customer.CustomerIdentifier);
@@ -157,6 +157,9 @@ namespace TestProject
             }
 
         }
+        /// <summary>
+        /// Test removing a customer
+        /// </summary>
         [TestMethod]
         public void RemoveCustomerSetContactNotInUse()
         {
@@ -184,7 +187,7 @@ namespace TestProject
 
         }
         /// <summary>
-        /// Working with Like condition ends-with
+        /// Working with LIKE condition ends-with with wild card
         /// </summary>
         [TestMethod]
         public void CustomersLikeConditionEndsWithTest()
@@ -205,7 +208,7 @@ namespace TestProject
         }
 
         /// <summary>
-        /// Working with Like condition ends-with
+        /// Working with LIKE condition ends-with
         /// </summary>
         [TestMethod]
         public void CustomersLikeConditionContainsTest() 
@@ -224,6 +227,9 @@ namespace TestProject
                 "Expected 5 customers for Like starts with");
 
         }
+        /// <summary>
+        /// Test LIKE starts with
+        /// </summary>
         [TestMethod]
         public void ContactsLastNameStartsWithTest()
         {
