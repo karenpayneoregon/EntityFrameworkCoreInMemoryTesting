@@ -34,11 +34,8 @@ namespace TestProject.Classes
         /// <returns></returns>
         public List<Customer> CustomersInMemoryList()
         {
-            var options = new DbContextOptionsBuilder<NorthWindContext>()
-                .UseInMemoryDatabase(databaseName: "Add_Customers_to_database")
-                .Options;
 
-            using (var context = new NorthWindContext(options))
+            using (var context = new NorthWindContext(ContextInMemoryOptions()))
             {
                 var customers = MockedInMemoryCustomers();
 
@@ -137,10 +134,11 @@ namespace TestProject.Classes
             }
         }
 
-        public DbContextOptions<NorthWindContext> ContextInMemoryOptions(string pName)
+        public DbContextOptions<NorthWindContext> ContextInMemoryOptions()
         {
             var options = new DbContextOptionsBuilder<NorthWindContext>()
-                .UseInMemoryDatabase(databaseName: pName)
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .EnableSensitiveDataLogging()
                 .Options;
 
             return options;
@@ -149,6 +147,7 @@ namespace TestProject.Classes
         {
             var options = new DbContextOptionsBuilder<NorthWindContext>()
                 .UseSqlite(pConnection)
+                .EnableSensitiveDataLogging()
                 .Options;
 
             return options;

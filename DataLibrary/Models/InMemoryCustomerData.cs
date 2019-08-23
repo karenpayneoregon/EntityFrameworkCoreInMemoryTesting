@@ -16,7 +16,8 @@ namespace DataLibrary.Models
         public InMemoryCustomerData()
         {
             var options = new DbContextOptionsBuilder<NorthWindContext>()
-                .UseInMemoryDatabase(databaseName: "Add_Customer_to_database")
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .EnableSensitiveDataLogging()
                 .Options;
 
             _customers = MockedCustomers();
@@ -24,6 +25,10 @@ namespace DataLibrary.Models
             Context.Customers.AddRange(_customers);
             Context.SaveChanges();
 
+        }
+        public List<Customer> GetAll()
+        {
+            return Context.Customers.ToList();
         }
         /// <summary>
         /// Mocked up customers for various test

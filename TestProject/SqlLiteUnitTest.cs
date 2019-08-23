@@ -17,10 +17,7 @@ namespace TestProject
         [TestInitialize]
         public void Init()
         {
-            if (TestContext.TestName == "MyTestMethod")
-            {
-                Console.WriteLine();
-            }
+  
         }
         [ClassInitialize()]
         public static void MyClassInitialize(TestContext testContext)
@@ -54,7 +51,6 @@ namespace TestProject
                     "Expected 21 countries for SqlLite add range");
                 Assert.IsTrue(customerCount == 4,
                     "Expected 4 customers for SqlLite add range");
-
             }
 
             /*
@@ -90,19 +86,20 @@ namespace TestProject
                 context.SaveChanges();
             }
 
-            var thisCustomer = new Customer();
+            Customer thisCustomer;
             using (var context = new NorthWindContext(ContextSqlLiteOptions(connection)))
             {
                 thisCustomer = context.Customers
                     .FirstOrDefault(cust => cust.CompanyName == "Around the Horn");
             }
 
+            // ReSharper disable once PossibleNullReferenceException
             thisCustomer.CompanyName = thisCustomer.CompanyName + "1";
 
             using (var context = new NorthWindContext(ContextSqlLiteOptions(connection)))
             {
                 context.Attach(thisCustomer).State = EntityState.Modified;
-                var result = context.SaveChanges();
+                context.SaveChanges();
             }
 
             using (var context = new NorthWindContext(ContextSqlLiteOptions(connection)))

@@ -17,6 +17,11 @@ namespace DataLibrary.Models
             Context = new NorthWindContext();
         }
 
+        public List<Customer> GetAll()
+        {
+            return Context.Customers.ToList();
+        }
+
         public Customer Add(Customer pCustomers)
         {
             Context.Add(pCustomers);

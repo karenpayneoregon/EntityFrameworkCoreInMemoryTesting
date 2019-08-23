@@ -51,5 +51,18 @@ namespace SimpleInjectorWindowForm1
                 }
             }
         }
+
+        private void CustomerListButton_Click(object sender, EventArgs e)
+        {
+            using (AsyncScopedLifestyle.BeginScope(CustomerContainer))
+            {
+                var customerInstance = CustomerContainer.GetInstance<ICustomer>();
+
+                var customer = customerInstance.GetAll();
+                MessageBox.Show(customer.Count.ToString());
+
+            }
+
+        }
     }
 }

@@ -18,6 +18,7 @@ namespace TestProject
         [TestInitialize]
         public void Init()
         {
+
             if (TestContext.TestName == "ContactsLastNameStartsWithTest" )
             {
                 _contactList = PrepareContacts();
@@ -29,17 +30,71 @@ namespace TestProject
         {
             TestResults = new List<TestContext>();
         }
+
+        #region These test show EF Core logging off
+
+        /// <summary>
+        /// Run and view output
+        /// </summary>
+        [TestMethod]
+        public void GetAllCustomersUsingDatabase()
+        {
+            var ops = new SqlCustomerData();
+            var result = ops.GetAll();
+        }
+        /// <summary>
+        /// Run and view output
+        /// </summary>
+        [TestMethod]
+        public void GetAllCustomersICustomerUsingDatabase()
+        {
+            using (var context = new NorthWindContext())
+            {
+                var customers = context.Customers.ToList();
+            }
+        }
+        /// <summary>
+        /// Run and view output
+        /// </summary>
+        [TestMethod]
+        public void CustomerJoinTest()
+        {
+            using (var context = new NorthWindContext())
+            {
+                var customerData = (
+                    from customer in context.Customers
+                    join contactType in context.ContactType on customer.ContactTypeIdentifier
+                        equals contactType.ContactTypeIdentifier
+                    join contact in context.Contact on customer.ContactIdentifier equals contact.ContactIdentifier
+                    join country in context.Countries on customer.CountryIdentfier equals country.Id
+                    select new CustomerEntity
+                    {
+                        CustomerIdentifier = customer.CustomerIdentifier,
+                        CompanyName = customer.CompanyName,
+                        ContactIdentifier = customer.ContactIdentifier,
+                        FirstName = contact.FirstName,
+                        LastName = contact.LastName,
+                        ContactTypeIdentifier = contactType.ContactTypeIdentifier,
+                        ContactTitle = contactType.ContactTitle,
+                        Address = customer.Street,
+                        City = customer.City,
+                        PostalCode = customer.PostalCode,
+                        CountryIdentifier = customer.CountryIdentfier,
+                        CountyName = country.CountryName
+                    }).ToList();
+
+                Assert.IsTrue(customerData.Count == 98);
+            }
+        }
+
+        #endregion
         /// <summary>
         /// Add new customer to InMemory container
         /// </summary>
         [TestMethod]
         public void AddCustomerTest() 
         {
-            var options = new DbContextOptionsBuilder<NorthWindContext>()
-                .UseInMemoryDatabase(databaseName: "Add_Customer_to_database")
-                .Options;
-
-            using (var context = new NorthWindContext(options)) 
+            using (var context = new NorthWindContext(ContextInMemoryOptions())) 
             {
                 var contact = new Contact()
                 {
@@ -61,7 +116,7 @@ namespace TestProject
                 Assert.IsTrue(saveChangesCount == 2, 
                     "Expect one customer and one contact to be added.");
 
-                Console.WriteLine(customer.ContactIdentifier);
+                //Console.WriteLine(customer.ContactIdentifier);
             }
         }
         [TestMethod]
@@ -78,8 +133,7 @@ namespace TestProject
         [TestMethod]
         public void CustomersUpdateTest()
         {
-
-            using (var context = new NorthWindContext(ContextInMemoryOptions("Modify_Customer_to_database")))
+            using (var context = new NorthWindContext(ContextInMemoryOptions()))
             {
                 var customer = new Customer()
                 {
@@ -101,8 +155,6 @@ namespace TestProject
                 Assert.IsTrue(customerModified.CompanyName == companyNameNew);
 
             }
-
-
 
         }
         [TestMethod]
@@ -183,7 +235,6 @@ namespace TestProject
                     startsWithToken))
                 .ToList();
 
-            Console.WriteLine(startsWithResults.Count);
             Assert.IsTrue(startsWithResults.Count == 4,
                 "Expected 4 contacts for Like starts with");
 

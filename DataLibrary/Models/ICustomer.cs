@@ -1,4 +1,6 @@
-﻿namespace DataLibrary.Models
+﻿using System.Collections.Generic;
+
+namespace DataLibrary.Models
 {
     public interface ICustomer
     {
@@ -27,5 +29,6 @@
         /// <returns></returns>
         Customer Delete(int id);
         int Commit();
+        List<Customer> GetAll();
     }
 }

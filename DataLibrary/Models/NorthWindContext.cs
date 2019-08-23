@@ -43,9 +43,7 @@ namespace EntityFrameworkCoreLikeLibrary.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            /*
-             * Disallow configuration to happen more than once.
-             */
+
             if (!optionsBuilder.IsConfigured)
             {
                 /*
