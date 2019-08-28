@@ -51,8 +51,8 @@ namespace EntityFrameworkCoreLikeLibrary.Models
                  * This is setup to run on one of two computers.
                  * For most developers this will be one server.
                  */
-                var serverName = Environment.UserName == "paynek" ? ".\\SQLEXPRESS" : "KARENS-PC";
-
+                Console.WriteLine(Environment.UserName);
+                var serverName = Environment.UserName.ToLower() == "paynek" ? ".\\SQLEXPRESS" : "KARENS-PC";
                 /*
                  * For production or live testing with the database, not InMemory test
                  * use this connection string in UseSqlServer

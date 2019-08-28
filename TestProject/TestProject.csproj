@@ -169,13 +169,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="contacts.txt" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\DataLibrary\DataLibrary.csproj">
       <Project>{68eca88e-a1c1-4439-ad8e-32bff8e94562}</Project>
       <Name>DataLibrary</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="contacts.txt" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
