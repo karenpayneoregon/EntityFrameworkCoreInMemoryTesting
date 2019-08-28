@@ -116,7 +116,6 @@ namespace TestProject
                 Assert.IsTrue(saveChangesCount == 2, 
                     "Expect one customer and one contact to be added.");
 
-                //Console.WriteLine(customer.ContactIdentifier);
             }
         }
         [TestMethod]
