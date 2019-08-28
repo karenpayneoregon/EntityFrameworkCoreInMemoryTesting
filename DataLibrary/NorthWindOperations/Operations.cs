@@ -14,14 +14,19 @@ namespace DataLibrary.NorthWindOperations
         private readonly NorthWindContext _context = new NorthWindContext();
 
         private static readonly Func<NorthWindContext, int, CustomerSpecial> _getCustomerSpecialById =
-            EF.CompileQuery((NorthWindContext context, int id) =>
+            EF.CompileQuery((NorthWindContext context, int customerIdentifier) =>
                 context.Customers.Select(
                     customer => new CustomerSpecial
                     {
                         Id = customer.CustomerIdentifier,
                         Name = customer.CompanyName,
-                        Phone = customer.Phone, CountryId = customer.CountryIdentfier
-                    }).FirstOrDefault(x => x.Id == id));
+                        Phone = customer.Phone,
+                        CountryId = customer.CountryIdentfier
+                    }).FirstOrDefault(x => x.Id == customerIdentifier));
+
+        private static readonly Func<NorthWindContext, int, Customer> _getCustomerById =
+            EF.CompileQuery((NorthWindContext context, int customerIdentifier) =>
+                context.Customers.FirstOrDefault(x => x.CustomerIdentifier == customerIdentifier));
 
         public CustomerSpecial GetCustomerById(int id)
         {
