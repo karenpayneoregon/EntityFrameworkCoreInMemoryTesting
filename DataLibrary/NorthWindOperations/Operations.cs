@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DataLibrary.Models;
 using EntityFrameworkCoreLikeLibrary.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace DataLibrary.NorthWindOperations
 {
@@ -32,5 +33,7 @@ namespace DataLibrary.NorthWindOperations
         {
             return _getCustomerSpecialById(_context, id);
         }
+
+
     }
 }
