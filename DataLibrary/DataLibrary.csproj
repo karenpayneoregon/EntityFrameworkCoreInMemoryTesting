@@ -141,6 +141,7 @@
     <Compile Include="Contexts\NorthWindContext.cs" />
     <Compile Include="Models\PhoneType.cs" />
     <Compile Include="Models\SqlCustomerData.cs" />
+    <Compile Include="NorthWindOperations\CustomerSpecial.cs" />
     <Compile Include="NorthWindOperations\Operations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

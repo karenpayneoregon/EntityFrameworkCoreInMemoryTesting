@@ -8,7 +8,7 @@ While in ASP.NET in memory test is rather easy as dependency injection is done i
 Simple Injector was picked from a handfull of open source libaries which means if a developer has a go to dependence injection library then replace Simple Injector with that one.
 
 ### Unit test
-All unit test use [InMemory data provider](https://docs.microsoft.com/en-us/ef/core/providers/in-memory/).
+All unit test use [InMemory data provider](https://docs.microsoft.com/en-us/ef/core/providers/in-memory/). SqlLite is used in several examples.
 
 ### Important
 EF’s in-memory database isn’t a relational database so it does not enforce constaints that a real database would.

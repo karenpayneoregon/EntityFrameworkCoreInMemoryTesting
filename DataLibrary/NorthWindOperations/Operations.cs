@@ -11,28 +11,21 @@ namespace DataLibrary.NorthWindOperations
 {
     public class Operations
     {
-        private NorthWindContext _context = new NorthWindContext();
-        private static Func<NorthWindContext, int, CustomerSpecial> _getOrderById =
+        private readonly NorthWindContext _context = new NorthWindContext();
+
+        private static readonly Func<NorthWindContext, int, CustomerSpecial> _getCustomerSpecialById =
             EF.CompileQuery((NorthWindContext context, int id) =>
                 context.Customers.Select(
-                    x => new CustomerSpecial
+                    customer => new CustomerSpecial
                     {
-                        Id = x.CustomerIdentifier,
-                        Name = x.CompanyName,
-                        Phone = x.Phone, CountryId = x.CountryIdentfier
+                        Id = customer.CustomerIdentifier,
+                        Name = customer.CompanyName,
+                        Phone = customer.Phone, CountryId = customer.CountryIdentfier
                     }).FirstOrDefault(x => x.Id == id));
 
-        public CustomerSpecial GetCompiledById(int id)
+        public CustomerSpecial GetCustomerById(int id)
         {
-            return _getOrderById(_context, id);
+            return _getCustomerSpecialById(_context, id);
         }
-    }
-
-    public class CustomerSpecial
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Phone { get; set; }
-        public int? CountryId { get; set; }
     }
 }

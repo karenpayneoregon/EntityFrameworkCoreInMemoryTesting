@@ -10,10 +10,10 @@ namespace TestProject
         public void CompiledQueryTest()
         {
             var ops = new DataLibrary.NorthWindOperations.Operations();
-            var results1 = ops.GetCompiledById(2);
+            var results1 = ops.GetCustomerById(2);
             Assert.IsTrue(results1.Name == "Ana Trujillo Emparedados y helados");
 
-            var results2 = ops.GetCompiledById(15);
+            var results2 = ops.GetCustomerById(15);
             Assert.IsTrue(results2.Name == "Drachenblut Delikatessen");
         }
     }
