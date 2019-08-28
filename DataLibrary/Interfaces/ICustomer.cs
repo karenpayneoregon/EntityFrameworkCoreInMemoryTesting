@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using DataLibrary.Models;
 
-namespace DataLibrary.Models
+namespace DataLibrary.Interfaces
 {
     public interface ICustomer
     {
