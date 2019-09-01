@@ -59,7 +59,7 @@ namespace TestProject
             using (var context = new NorthWindContext(ContextSqlLiteOptions(connection)))
             {
                 var horn = context.Customers
-                    .FirstOrDefault(cust => cust.CompanyName == "Around the Horn");
+                    .FirstOrDefault(customer => customer.CompanyName == "Around the Horn");
 
                 Assert.IsNotNull(horn);
             }
@@ -90,7 +90,7 @@ namespace TestProject
             using (var context = new NorthWindContext(ContextSqlLiteOptions(connection)))
             {
                 thisCustomer = context.Customers
-                    .FirstOrDefault(cust => cust.CompanyName == "Around the Horn");
+                    .FirstOrDefault(customer => customer.CompanyName == "Around the Horn");
             }
 
             // ReSharper disable once PossibleNullReferenceException

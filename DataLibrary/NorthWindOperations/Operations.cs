@@ -14,6 +14,8 @@ namespace DataLibrary.NorthWindOperations
     {
         private readonly NorthWindContext _context = new NorthWindContext();
 
+        #region For use with large iterations e.g. 100,000 plus (list are not supported yet)
+
         private static readonly Func<NorthWindContext, int, CustomerSpecial> _getCustomerSpecialById =
             EF.CompileQuery((NorthWindContext context, int customerIdentifier) =>
                 context.Customers.Select(
@@ -28,11 +30,18 @@ namespace DataLibrary.NorthWindOperations
         private static readonly Func<NorthWindContext, int, Customer> _getCustomerById =
             EF.CompileQuery((NorthWindContext context, int customerIdentifier) =>
                 context.Customers.FirstOrDefault(x => x.CustomerIdentifier == customerIdentifier));
-
+        
+        /// <summary>
+        /// Get customer by primary key
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Found customer or null if not found</returns>
         public CustomerSpecial GetCustomerById(int id)
         {
             return _getCustomerSpecialById(_context, id);
         }
+
+        #endregion
 
 
     }
