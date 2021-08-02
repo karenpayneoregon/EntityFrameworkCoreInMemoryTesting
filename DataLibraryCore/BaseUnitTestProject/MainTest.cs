@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using BaseUnitTestProject.Base;
 using BaseUnitTestProject.Classes;
 using DataLibraryCore.Contexts;
 using DataLibraryCore.Models;
@@ -16,6 +17,7 @@ namespace BaseUnitTestProject
     {
 
         [TestMethod]
+        [TestTraits(Trait.InMemoryTesting)]
         public void BasicReadMockedCustomersData()
         {
             var customers = Context.Customers.OrderBy(x => x.CustomerIdentifier).ToList();
@@ -28,6 +30,7 @@ namespace BaseUnitTestProject
         }
 
         [TestMethod]
+        [TestTraits(Trait.ReadDataTesting)]
         public void BasicReadRealCustomers()
         {
             using var context = new NorthWindContext();
@@ -42,6 +45,7 @@ namespace BaseUnitTestProject
 
 
         [TestMethod]
+        [TestTraits(Trait.InMemoryTesting)]
         public void AddCustomerTest()
         {
             var contact = new Contact()
@@ -69,6 +73,7 @@ namespace BaseUnitTestProject
         }
 
         [TestMethod]
+        [TestTraits(Trait.InMemoryTesting)]
         public async Task CustomersUpdateTest()
         {
 
@@ -97,6 +102,91 @@ namespace BaseUnitTestProject
 
 
         }
+
+        /// <summary>
+        /// This test uses StartsWith as apposed to Functions.Like because EF Core does not support client-evaluation.
+        /// Which means that in-memory testing can not be used.
+        /// </summary>
+        [TestMethod]
+        [TestTraits(Trait.InMemoryTesting)]
+        public void ContactsLastNameStartsWithLocal()
+        {
+            var startsWithToken = "Cr";
+            var startsWithResults = _contactList
+                .Where(contact => contact.LastName.StartsWith(startsWithToken, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+
+            Assert.IsTrue(startsWithResults.Count == 4,
+                "Expected 4 contacts for Like starts with");
+
+            _contactList = null;
+        }
+
+        /// <summary>
+        /// Unlike <see cref="ContactsLastNameStartsWithLocal"/> since reading from the live database there is not client side evaluation
+        /// and Functions.Like works.
+        /// </summary>
+        [TestMethod]
+        [TestTraits(Trait.ReadDataLike)]
+        public void ContactsLastNameStartsWithReal()
+        {
+            using var context = new NorthWindContext();
+
+            var startsWithToken = "Cr%";
+
+            var startsWithResults = context.Contact
+                .Where(contact => Functions.Like(
+                    contact.LastName,
+                    startsWithToken))
+                .ToList();
+
+            Assert.IsTrue(startsWithResults.Count == 4,
+                "Expected 4 contacts for Like starts with");
+
+        }
+
+        [TestMethod]
+        public void DeleteCustomer()
+        {
+            const string findCompanyName = "Around the Horn";
+
+
+            var cust = Context.Customers.ToList();
+            Context.Contact.AddRange(MockedContacts());
+            Context.SaveChanges();
+            var contacts = Context.Contact.ToList();
+
+            var singleCustomer = Context.Customers.FirstOrDefault(cust => cust.CompanyName == findCompanyName);
+            var contactList = Context.Contact.Where(x => x.ContactIdentifier < 20).ToList();
+
+            var singleContact = Context.Contact.FirstOrDefault(con => con.ContactIdentifier == singleCustomer.ContactIdentifier);
+
+            if (singleContact is not null)
+            {
+                var contactIdentifier = singleContact.ContactIdentifier;
+                Context.Entry(singleCustomer!).State = EntityState.Modified;
+
+                Context.SaveChanges();
+
+                Context.Customers.Remove(singleCustomer);
+                singleContact.InUse = false;
+
+                Context.SaveChanges();
+
+                singleCustomer = Context.Customers.FirstOrDefault(cust => cust.CompanyName == findCompanyName);
+
+                singleContact = Context.Contact.FirstOrDefault(
+                    con => con.ContactIdentifier == contactIdentifier);
+
+                
+                Assert.IsTrue(singleCustomer == null && singleContact.InUse == false);
+                Console.WriteLine();
+
+            }
+
+
+        }
+
 
 
 

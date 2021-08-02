@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using BaseUnitTestProject.Base;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BaseUnitTestProject
@@ -8,7 +9,7 @@ namespace BaseUnitTestProject
     public class CompiledQueries
     {
         [TestMethod]
-        //[Ignore]
+        [TestTraits(Trait.ReadDataTesting)]
         public void CompiledQueryTest()
         {
             var ops = new DataLibraryCore.NorthWindOperations.Operations();
@@ -22,7 +23,7 @@ namespace BaseUnitTestProject
         /// Data load should be larger with more iterations 
         /// </summary>
         [TestMethod]
-        //[Ignore]
+        [TestTraits(Trait.ReadDataTesting)]
         public void LoadTest()
         {
             var ops = new DataLibraryCore.NorthWindOperations.Operations();

@@ -46,6 +46,8 @@ namespace DataLibraryCore.Contexts
             optionsBuilder.UseSqlServer(Helper.ConnectionString())
                 .EnableSensitiveDataLogging()
                 .LogTo(message => Debug.WriteLine(message));
+            
+            
         }
 
 

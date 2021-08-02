@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using BaseUnitTestProject.Classes;
 using DataLibraryCore.Contexts;
 using DataLibraryCore.Models;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 
 // ReSharper disable once CheckNamespace - do not change
@@ -18,11 +20,25 @@ namespace BaseUnitTestProject
     {
         private List<Contact> _contactList;
 
+        /// <summary>
+        /// Options for in-memory testing
+        /// </summary>
         readonly DbContextOptions<NorthWindContext> dbContextOptions = new DbContextOptionsBuilder<NorthWindContext>()
-            .UseInMemoryDatabase(Guid.NewGuid().ToString()).EnableSensitiveDataLogging().Options;
+            .UseInMemoryDatabase(Guid.NewGuid().ToString())
+            .EnableSensitiveDataLogging()
+            .Options;
 
-        private NorthWindContext Context; 
+        /// <summary>
+        /// Single instance of the DbContext
+        /// </summary>
+        private NorthWindContext Context;
+        protected List<Contact> MockedContacts()
+        {
+            var fileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "contacts.json");
+            var contacts = JsonConvert.DeserializeObject<List<Contact>>(File.ReadAllText(fileName));
+            return contacts;
 
+        }
         [TestInitialize]
         public void Init()
         {
@@ -44,9 +60,6 @@ namespace BaseUnitTestProject
         {
             TestResults = new List<TestContext>();
         }
-
-
-
     }
 
 }

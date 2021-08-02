@@ -10,23 +10,13 @@ namespace BaseUnitTestProject.Base
         /// <summary>
         /// Place holder 
         /// </summary>
-        PlaceHolder,
+        InMemoryTesting,
         /// <summary>
         /// Entity Framework Core test
         /// </summary>
-        EntityFrameworkCore,
-        /// <summary>
-        /// Configuration test
-        /// </summary>
-        Configurations,
-        /// <summary>
-        /// Controller test
-        /// </summary>
-        Controller,
-        /// <summary>
-        /// Service test
-        /// </summary>
-        Services
+        ReadDataTesting,
+        ReadDataLike
+
     }
     /// <summary>
     /// Declarative class for using Trait enum about for traits on test method.
