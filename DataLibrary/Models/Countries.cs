@@ -19,5 +19,7 @@ namespace EntityFrameworkCoreLikeLibrary.Models
 
         [InverseProperty("CountryIdentfierNavigation")]
         public virtual ICollection<Customer> Customers { get; set; }
+
+        public override string ToString() => CountryName;
     }
 }

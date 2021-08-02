@@ -69,18 +69,8 @@ namespace TestProject.Classes
 
             using (var context = new NorthWindContext(options))
             {
-                //context.Contact.Clear();
 
-                var test = context.Contact.ToList();
-
-                if (test.Count > 0)
-                {
-                    return test;
-                }
-                
-                //context.Contact.RemoveRange(context.Contact.ToList());
-                //context.SaveChanges();
-
+                context.Database.EnsureDeleted();
                 context.Contact.AddRange(MockedContacts());
                 context.SaveChanges();
 

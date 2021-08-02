@@ -21,28 +21,7 @@ namespace TestProject.Classes
         protected List<Contact> MockedContacts()
         {
             var fileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "contacts.json");
-            var fileContents = File.ReadAllLines(fileName);
-
             var contacts = JsonConvert.DeserializeObject<List<Contact>>(File.ReadAllText(fileName));
-
-            //var contacts = fileContents.Select(line => line.Split(',')).
-            //    Select(fields => new Contact()
-            //    {
-            //        FirstName = fields[1],
-            //        LastName = fields[2],
-            //        ModifiedDate = Convert.ToDateTime(fields[3]),
-            //        InUse = Convert.ToInt32(fields[4]) != 0
-            //    }).ToList();
-
-
-
-            //for (int index = 0; index < contacts.Count; index++)
-            //{
-            //    contacts[index].ContactIdentifier = index +1;
-            //}
-            //contacts.ModeListToJson(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "contacts.json"));
-            
-            
             return contacts;
 
         }

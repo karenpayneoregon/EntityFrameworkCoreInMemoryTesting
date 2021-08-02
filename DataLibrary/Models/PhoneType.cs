@@ -18,5 +18,7 @@ namespace EntityFrameworkCoreLikeLibrary.Models
 
         [InverseProperty("PhoneTypeIdenitfierNavigation")]
         public virtual ICollection<ContactContactDevices> ContactContactDevices { get; set; }
+
+        public override string ToString() => PhoneTypeDescription;
     }
 }

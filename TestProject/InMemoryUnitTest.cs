@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using DataLibrary.Models;
-using DataLibrary.NorthWindOperations;
 using EntityFrameworkCoreLikeLibrary.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -24,9 +22,6 @@ namespace TestProject
             if (TestContext.TestName == nameof(ContactsLastNameStartsWithTest) )
             {
                 _contactList = PrepareContacts();
-            }else if (TestContext.TestName == nameof(RemoveCustomerSetContactNotInUse))
-            {
-                
             }
         }
 
@@ -39,7 +34,7 @@ namespace TestProject
         #region These test show EF Core logging off
 
         /// <summary>
-        /// Run and view output
+        /// Run and view output - not really a test
         /// </summary>
         [TestMethod]
         public void GetAllCustomersUsingDatabase()
@@ -47,8 +42,9 @@ namespace TestProject
             var ops = new SqlCustomerData();
             var result = ops.GetAll();
         }
+
         /// <summary>
-        /// Run and view output
+        /// Run and view output - not really a test
         /// </summary>
         [TestMethod]
         public void GetAllCustomersICustomerUsingDatabase()
@@ -58,8 +54,9 @@ namespace TestProject
                 var customers = context.Customers.ToList();
             }
         }
+
         /// <summary>
-        /// Run and view output
+        /// Run and view output - not really a test
         /// </summary>
         [TestMethod]
         public void CustomerJoinTest()
@@ -106,6 +103,7 @@ namespace TestProject
                     FirstName = "Karen",
                     LastName = "Payne"
                 };
+                
                 context.Entry(contact).State = EntityState.Added;
 
                 var customer = new Customer()
@@ -114,6 +112,7 @@ namespace TestProject
                     ContactIdentifierNavigation = contact,
                     CountryIdentfier = 20
                 };
+                
                 context.Entry(customer).State = EntityState.Added;
 
                 var saveChangesCount = context.SaveChanges();
@@ -167,7 +166,6 @@ namespace TestProject
         [TestMethod]
         public void RemoveCustomerSetContactNotInUse()
         {
-            //Console.WriteLine(DeleteCustomer());
             Assert.IsTrue(DeleteCustomer());
         }
 
@@ -246,17 +244,10 @@ namespace TestProject
                     startsWithToken))
                 .ToList();
 
-            Assert.IsTrue(startsWithResults.Count == 4, "Expected 4 contacts for Like starts with");
+            Assert.IsTrue(startsWithResults.Count == 4, 
+                "Expected 4 contacts for Like starts with");
 
             _contactList = null;
         }
-
-        [TestMethod]
-        public void CreateContactsJson()
-        {
-            
-        }
-
-
     }
 }

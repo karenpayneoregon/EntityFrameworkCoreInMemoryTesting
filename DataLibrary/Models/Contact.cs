@@ -27,9 +27,6 @@ namespace EntityFrameworkCoreLikeLibrary.Models
         [InverseProperty("ContactIdentifierNavigation")]
         public virtual ICollection<Customer> Customers { get; set; }
 
-        public override string ToString()
-        {
-            return $"{ContactIdentifier} {FirstName} {LastName}";
-        }
+        public override string ToString() => $"{ContactIdentifier} {FirstName} {LastName}";
     }
 }

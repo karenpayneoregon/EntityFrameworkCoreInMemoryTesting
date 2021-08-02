@@ -31,7 +31,7 @@ namespace TestProject
                 ops.GetCustomerById(15);
                 stopwatch.Stop();
 
-                Console.WriteLine($"{stopwatch.ElapsedMilliseconds.ToString().PadLeft(4)}ms");
+                Console.WriteLine($"{stopwatch.ElapsedMilliseconds,4}ms");
             }
         }
     }
