@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using DataLibrary.Models;
 using EntityFrameworkCoreLikeLibrary.Models;
 using Microsoft.EntityFrameworkCore;
@@ -52,6 +53,7 @@ namespace TestProject
             using (var context = new NorthWindContext())
             {
                 var customers = context.Customers.ToList();
+                Console.WriteLine(customers.Count);
             }
         }
 
@@ -134,10 +136,12 @@ namespace TestProject
                 "Expected all new customers to have a primary key");
         }
         [TestMethod]
-        public void CustomersUpdateTest()
+        public async Task CustomersUpdateTest()
         {
+            
             using (var context = new NorthWindContext(ContextInMemoryOptions()))
             {
+                // arrange
                 var customer = new Customer()
                 {
                     ContactIdentifier = 1,
@@ -146,15 +150,18 @@ namespace TestProject
                     CountryIdentfier = 9
                 };
 
-                context.Customers.Add(customer);
-                context.SaveChanges();
+                await context.Customers.AddAsync(customer);
+                await context.SaveChangesAsync();
 
+                // act
                 var companyNameNew = "DEF";
                 customer.CompanyName = companyNameNew;
-                context.Customers.Update(customer); // <<---new for EF Core
-                context.SaveChanges();
+                context.Customers.Update(customer);
+                await context.SaveChangesAsync();
 
                 var customerModified = context.Customers.Find(customer.CustomerIdentifier);
+                
+                // assert
                 Assert.IsTrue(customerModified.CompanyName == companyNameNew);
 
             }
