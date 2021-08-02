@@ -14,6 +14,8 @@ namespace DataLibrary.NorthWindOperations
     {
         private readonly NorthWindContext _context = new NorthWindContext();
 
+
+
         #region For use with large iterations e.g. 100,000 plus (list are not supported yet)
 
         private static readonly Func<NorthWindContext, int, CustomerSpecial> _getCustomerSpecialById =

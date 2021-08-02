@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using DataLibrary.Models;
+using DataLibrary.NorthWindOperations;
 using EntityFrameworkCoreLikeLibrary.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -19,9 +21,12 @@ namespace TestProject
         public void Init()
         {
 
-            if (TestContext.TestName == "ContactsLastNameStartsWithTest" )
+            if (TestContext.TestName == nameof(ContactsLastNameStartsWithTest) )
             {
                 _contactList = PrepareContacts();
+            }else if (TestContext.TestName == nameof(RemoveCustomerSetContactNotInUse))
+            {
+                
             }
         }
 
@@ -162,6 +167,7 @@ namespace TestProject
         [TestMethod]
         public void RemoveCustomerSetContactNotInUse()
         {
+            //Console.WriteLine(DeleteCustomer());
             Assert.IsTrue(DeleteCustomer());
         }
 
@@ -240,11 +246,17 @@ namespace TestProject
                     startsWithToken))
                 .ToList();
 
-            Assert.IsTrue(startsWithResults.Count == 4,
-                "Expected 4 contacts for Like starts with");
+            Assert.IsTrue(startsWithResults.Count == 4, "Expected 4 contacts for Like starts with");
 
             _contactList = null;
         }
+
+        [TestMethod]
+        public void CreateContactsJson()
+        {
+            
+        }
+
 
     }
 }

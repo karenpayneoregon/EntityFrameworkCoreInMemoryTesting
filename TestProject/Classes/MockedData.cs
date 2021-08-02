@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DataLibrary.Models;
 using EntityFrameworkCoreLikeLibrary.Models;
+using Newtonsoft.Json;
 
 namespace TestProject.Classes
 {
@@ -19,18 +20,29 @@ namespace TestProject.Classes
         public List<Contact> ContactList { get; set; } 
         protected List<Contact> MockedContacts()
         {
-            var fileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "contacts.txt");
+            var fileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "contacts.json");
             var fileContents = File.ReadAllLines(fileName);
 
-            var contacts = fileContents.Select(line => line.Split(',')).
-                Select(fields => new Contact()
-                {
-                    FirstName = fields[1],
-                    LastName = fields[2],
-                    ModifiedDate = Convert.ToDateTime(fields[3]),
-                    InUse = Convert.ToInt32(fields[4]) != 0
-                }).ToList();
+            var contacts = JsonConvert.DeserializeObject<List<Contact>>(File.ReadAllText(fileName));
 
+            //var contacts = fileContents.Select(line => line.Split(',')).
+            //    Select(fields => new Contact()
+            //    {
+            //        FirstName = fields[1],
+            //        LastName = fields[2],
+            //        ModifiedDate = Convert.ToDateTime(fields[3]),
+            //        InUse = Convert.ToInt32(fields[4]) != 0
+            //    }).ToList();
+
+
+
+            //for (int index = 0; index < contacts.Count; index++)
+            //{
+            //    contacts[index].ContactIdentifier = index +1;
+            //}
+            //contacts.ModeListToJson(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "contacts.json"));
+            
+            
             return contacts;
 
         }
@@ -97,5 +109,7 @@ namespace TestProject.Classes
             return customers;
 
         }
+        
+        
     }
 }

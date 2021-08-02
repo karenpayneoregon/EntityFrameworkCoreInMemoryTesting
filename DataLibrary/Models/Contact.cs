@@ -26,5 +26,10 @@ namespace EntityFrameworkCoreLikeLibrary.Models
         public virtual ICollection<ContactContactDevices> ContactContactDevices { get; set; }
         [InverseProperty("ContactIdentifierNavigation")]
         public virtual ICollection<Customer> Customers { get; set; }
+
+        public override string ToString()
+        {
+            return $"{ContactIdentifier} {FirstName} {LastName}";
+        }
     }
 }
