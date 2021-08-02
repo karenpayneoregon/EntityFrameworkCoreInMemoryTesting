@@ -48,7 +48,7 @@ appsettings.json
 {
   "database": {
     "DatabaseServer": ".\\SQLEXPRESS",
-    "Catalog": "NorthWind2020",
+    "Catalog": "NorthWindAzure2",
     "IntegratedSecurity": "true",
     "UsingLogging": "true"
   },
@@ -58,6 +58,19 @@ appsettings.json
   },
   "Environment": {
     "Production": false
+  }
+}
+```
+
+Or for DataLibraryCore all that is needed
+
+```json
+{
+  "database": {
+    "DatabaseServer": ".\\SQLEXPRESS",
+    "Catalog": "NorthWindAzure2",
+    "IntegratedSecurity": "true",
+    "UsingLogging": "true"
   }
 }
 ```

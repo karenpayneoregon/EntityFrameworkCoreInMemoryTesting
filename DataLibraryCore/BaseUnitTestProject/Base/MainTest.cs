@@ -32,6 +32,11 @@ namespace BaseUnitTestProject
         /// Single instance of the DbContext
         /// </summary>
         private NorthWindContext Context;
+
+        /// <summary>
+        /// Read contact data from json file into List&lt;Contact&gt;
+        /// </summary>
+        /// <returns></returns>
         protected List<Contact> MockedContacts()
         {
             var fileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "contacts.json");
@@ -39,6 +44,10 @@ namespace BaseUnitTestProject
             return contacts;
 
         }
+        
+        /// <summary>
+        /// Code to run before each test method
+        /// </summary>
         [TestInitialize]
         public void Init()
         {

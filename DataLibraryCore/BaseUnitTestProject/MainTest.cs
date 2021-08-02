@@ -45,7 +45,7 @@ namespace BaseUnitTestProject
 
 
         [TestMethod]
-        [TestTraits(Trait.InMemoryTesting)]
+        [TestTraits(Trait.InMemoryTesting_CRUD)]
         public void AddCustomerTest()
         {
             var contact = new Contact()
@@ -73,7 +73,7 @@ namespace BaseUnitTestProject
         }
 
         [TestMethod]
-        [TestTraits(Trait.InMemoryTesting)]
+        [TestTraits(Trait.InMemoryTesting_CRUD)]
         public async Task CustomersUpdateTest()
         {
 
@@ -146,19 +146,15 @@ namespace BaseUnitTestProject
         }
 
         [TestMethod]
+        [TestTraits(Trait.InMemoryTesting_CRUD)]
         public void DeleteCustomer()
         {
             const string findCompanyName = "Around the Horn";
 
-
-            var cust = Context.Customers.ToList();
             Context.Contact.AddRange(MockedContacts());
             Context.SaveChanges();
-            var contacts = Context.Contact.ToList();
-
+            
             var singleCustomer = Context.Customers.FirstOrDefault(cust => cust.CompanyName == findCompanyName);
-            var contactList = Context.Contact.Where(x => x.ContactIdentifier < 20).ToList();
-
             var singleContact = Context.Contact.FirstOrDefault(con => con.ContactIdentifier == singleCustomer.ContactIdentifier);
 
             if (singleContact is not null)

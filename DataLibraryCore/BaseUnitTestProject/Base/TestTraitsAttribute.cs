@@ -15,8 +15,8 @@ namespace BaseUnitTestProject.Base
         /// Entity Framework Core test
         /// </summary>
         ReadDataTesting,
-        ReadDataLike
-
+        ReadDataLike,
+        InMemoryTesting_CRUD
     }
     /// <summary>
     /// Declarative class for using Trait enum about for traits on test method.
