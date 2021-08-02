@@ -21,7 +21,7 @@ namespace TestProject
         /// Data load should be larger with more iterations 
         /// </summary>
         [TestMethod]
-        public void DummyTest()
+        public void LoadTest()
         {
             var ops = new DataLibrary.NorthWindOperations.Operations();
             for (int index = 0; index < 1000; index++)
