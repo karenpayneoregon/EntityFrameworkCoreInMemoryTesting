@@ -34,16 +34,12 @@ namespace BaseUnitTestProject.Classes
                 .UseInMemoryDatabase(databaseName: "Add_Contacts_to_database")
                 .Options;
 
-            using (var context = new NorthWindContext(options))
-            {
+            using var context = new NorthWindContext(options);
+            context.Database.EnsureDeleted();
+            context.Contact.AddRange(MockedContacts());
+            context.SaveChanges();
 
-                context.Database.EnsureDeleted();
-                context.Contact.AddRange(MockedContacts());
-                context.SaveChanges();
-
-                return context.Contact.ToList();
-
-            }
+            return context.Contact.ToList();
         }
         /// <summary>
         /// Mocked up customers for various in-memory test

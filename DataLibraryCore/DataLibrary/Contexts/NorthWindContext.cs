@@ -13,7 +13,6 @@ namespace DataLibraryCore.Contexts
 {
     public partial class NorthWindContext : DbContext
     {
-        private readonly StreamWriter _logStream = new("logging.txt", append: true);
 
 
         public NorthWindContext()
@@ -37,19 +36,7 @@ namespace DataLibraryCore.Contexts
 
             if (!optionsBuilder.IsConfigured)
             {
-                var serverName = Environment.UserName.ToLower() == "paynek" ? ".\\SQLEXPRESS" : "KARENS-PC";
-                var connectionString = $"Server={serverName};Database=NorthWindAzure2;Trusted_Connection=True;";
-
-
-
-#if (EFC_LOG_ENABLED_InMemory)
-                //optionsBuilder.UseSqlServer($"Server={serverName};Database=EFProviders.InMemory;Trusted_Connection=True;ConnectRetryCount=0");
-                //optionsBuilder.UseLoggerFactory(GetLoggerFactory()).EnableSensitiveDataLogging().UseSqlServer(connectionString);
-                optionsBuilder.UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString());
-
-#else
-                optionsBuilder.UseSqlServer(Helper.ConnectionString());
-#endif
+                NoLogging(optionsBuilder);
             }
 
         }
@@ -61,14 +48,7 @@ namespace DataLibraryCore.Contexts
                 .LogTo(message => Debug.WriteLine(message));
         }
 
-        private void LogQueryInfoToFile(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(Helper.ConnectionString())
-                .EnableSensitiveDataLogging()
-                .LogTo(message => _logStream.WriteLine(message),
-                    LogLevel.Information,
-                    DbContextLoggerOptions.Category);
-        }
+
         private static void NoLogging(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(Helper.ConnectionString());
@@ -122,18 +102,6 @@ namespace DataLibraryCore.Contexts
                     .HasConstraintName("FK_Customers_Countries");
             });
         }
-        #region Takes care of disposing stream used for logging
-        public override void Dispose()
-        {
-            base.Dispose();
-            _logStream.Dispose();
-        }
-
-        public override async ValueTask DisposeAsync()
-        {
-            await base.DisposeAsync();
-            await _logStream.DisposeAsync();
-        }
-        #endregion             
+           
     }
 }

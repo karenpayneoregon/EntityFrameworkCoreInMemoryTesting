@@ -79,11 +79,6 @@ namespace TestProject.Classes
             }
         }
 
-         
-
-
-
-
         /// <summary>
         /// Remove customer, mark contact as not in use
         /// </summary>

@@ -18,14 +18,25 @@ namespace BaseUnitTestProject
     {
         private List<Contact> _contactList;
 
+        readonly DbContextOptions<NorthWindContext> dbContextOptions = new DbContextOptionsBuilder<NorthWindContext>()
+            .UseInMemoryDatabase(Guid.NewGuid().ToString()).EnableSensitiveDataLogging().Options;
+
+        private NorthWindContext Context; 
+
         [TestInitialize]
         public void Init()
         {
+            
+            _contactList = MockedData.PrepareContacts();
+            
+            Context = new NorthWindContext(dbContextOptions);
+            
+            if (TestContext.TestName != nameof(CustomersUpdateTest))
+            {
+                Context.Customers.AddRange(MockedData.MockedInMemoryCustomers());
+                Context.SaveChanges();
+            }
 
-            //if (TestContext.TestName == nameof(ContactsLastNameStartsWithTest))
-            //{
-            //    _contactList = MockedData.PrepareContacts();
-            //}
         }
 
         [ClassInitialize()]

@@ -8,7 +8,7 @@ namespace BaseUnitTestProject
     public class CompiledQueries
     {
         [TestMethod]
-        [Ignore]
+        //[Ignore]
         public void CompiledQueryTest()
         {
             var ops = new DataLibraryCore.NorthWindOperations.Operations();
@@ -22,7 +22,7 @@ namespace BaseUnitTestProject
         /// Data load should be larger with more iterations 
         /// </summary>
         [TestMethod]
-        [Ignore]
+        //[Ignore]
         public void LoadTest()
         {
             var ops = new DataLibraryCore.NorthWindOperations.Operations();

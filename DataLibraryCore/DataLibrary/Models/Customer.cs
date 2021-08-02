@@ -36,6 +36,6 @@ namespace DataLibraryCore.Models
         [InverseProperty("Customers")]
         public virtual Countries CountryIdentfierNavigation { get; set; }
 
-        public override string ToString() => CompanyName;
+        public override string ToString() => $"{CustomerIdentifier} {CompanyName}";
     }
 }
