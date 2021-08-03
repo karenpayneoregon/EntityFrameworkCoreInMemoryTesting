@@ -1,0 +1,107 @@
+[
+  {
+    "Id": 1,
+    "CountryIdentifier": 1,
+    "Name": "Argentina"
+  },
+  {
+    "Id": 2,
+    "CountryIdentifier": 2,
+    "Name": "Austria"
+  },
+  {
+    "Id": 3,
+    "CountryIdentifier": 3,
+    "Name": "Belgium"
+  },
+  {
+    "Id": 4,
+    "CountryIdentifier": 4,
+    "Name": "Brazil"
+  },
+  {
+    "Id": 5,
+    "CountryIdentifier": 5,
+    "Name": "Canada"
+  },
+  {
+    "Id": 6,
+    "CountryIdentifier": 6,
+    "Name": "Denmark"
+  },
+  {
+    "Id": 7,
+    "CountryIdentifier": 7,
+    "Name": "Finland"
+  },
+  {
+    "Id": 8,
+    "CountryIdentifier": 8,
+    "Name": "France"
+  },
+  {
+    "Id": 9,
+    "CountryIdentifier": 9,
+    "Name": "Germany"
+  },
+  {
+    "Id": 10,
+    "CountryIdentifier": 10,
+    "Name": "Ireland"
+  },
+  {
+    "Id": 11,
+    "CountryIdentifier": 11,
+    "Name": "Italy"
+  },
+  {
+    "Id": 12,
+    "CountryIdentifier": 12,
+    "Name": "Mexico"
+  },
+  {
+    "Id": 13,
+    "CountryIdentifier": 13,
+    "Name": "Norway"
+  },
+  {
+    "Id": 14,
+    "CountryIdentifier": 14,
+    "Name": "Poland"
+  },
+  {
+    "Id": 15,
+    "CountryIdentifier": 15,
+    "Name": "Portugal"
+  },
+  {
+    "Id": 16,
+    "CountryIdentifier": 16,
+    "Name": "Spain"
+  },
+  {
+    "Id": 17,
+    "CountryIdentifier": 17,
+    "Name": "Sweden"
+  },
+  {
+    "Id": 18,
+    "CountryIdentifier": 18,
+    "Name": "Switzerland"
+  },
+  {
+    "Id": 19,
+    "CountryIdentifier": 19,
+    "Name": "UK"
+  },
+  {
+    "Id": 20,
+    "CountryIdentifier": 20,
+    "Name": "USA"
+  },
+  {
+    "Id": 21,
+    "CountryIdentifier": 21,
+    "Name": "Venezuela"
+  }
+]

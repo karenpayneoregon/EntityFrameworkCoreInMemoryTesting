@@ -1,0 +1,107 @@
+[
+  {
+    "Id": 1,
+    "CountryName": "Argentina",
+    "Customers": []
+  },
+  {
+    "Id": 2,
+    "CountryName": "Austria",
+    "Customers": []
+  },
+  {
+    "Id": 3,
+    "CountryName": "Belgium",
+    "Customers": []
+  },
+  {
+    "Id": 4,
+    "CountryName": "Brazil",
+    "Customers": []
+  },
+  {
+    "Id": 5,
+    "CountryName": "Canada",
+    "Customers": []
+  },
+  {
+    "Id": 6,
+    "CountryName": "Denmark",
+    "Customers": []
+  },
+  {
+    "Id": 7,
+    "CountryName": "Finland",
+    "Customers": []
+  },
+  {
+    "Id": 8,
+    "CountryName": "France",
+    "Customers": []
+  },
+  {
+    "Id": 9,
+    "CountryName": "Germany",
+    "Customers": []
+  },
+  {
+    "Id": 10,
+    "CountryName": "Ireland",
+    "Customers": []
+  },
+  {
+    "Id": 11,
+    "CountryName": "Italy",
+    "Customers": []
+  },
+  {
+    "Id": 12,
+    "CountryName": "Mexico",
+    "Customers": []
+  },
+  {
+    "Id": 13,
+    "CountryName": "Norway",
+    "Customers": []
+  },
+  {
+    "Id": 14,
+    "CountryName": "Poland",
+    "Customers": []
+  },
+  {
+    "Id": 15,
+    "CountryName": "Portugal",
+    "Customers": []
+  },
+  {
+    "Id": 16,
+    "CountryName": "Spain",
+    "Customers": []
+  },
+  {
+    "Id": 17,
+    "CountryName": "Sweden",
+    "Customers": []
+  },
+  {
+    "Id": 18,
+    "CountryName": "Switzerland",
+    "Customers": []
+  },
+  {
+    "Id": 19,
+    "CountryName": "UK",
+    "Customers": []
+  },
+  {
+    "Id": 20,
+    "CountryName": "USA",
+    "Customers": []
+  },
+  {
+    "Id": 21,
+    "CountryName": "Venezuela",
+    "Customers": []
+  }
+]
