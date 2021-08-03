@@ -104,7 +104,6 @@ namespace BaseUnitTestProject
             // assert
             Assert.IsTrue(customerModified.CompanyName == companyNameNew);
 
-
         }
 
         /// <summary>
@@ -148,7 +147,10 @@ namespace BaseUnitTestProject
                 "Expected 4 contacts for Like starts with");
 
         }
-
+        
+        /// <summary>
+        /// Simple in-memory test for crud
+        /// </summary>
         [TestMethod]
         [TestTraits(Trait.InMemoryTesting_CRUD)]
         public void RemoveCustomerSetContactNotInUse()
@@ -180,14 +182,17 @@ namespace BaseUnitTestProject
 
 
                 Assert.IsTrue(singleCustomer == null && singleContact.InUse == false);
-                Console.WriteLine();
 
             }
 
 
         }
 
+        /// <summary>
+        /// Live data with Projection
+        /// </summary>
         [TestMethod]
+        [TestTraits(Trait.ReadDataTesting)]
         public void CustomerJoinTest()
         {
             using var context = new NorthWindContext();
@@ -226,7 +231,7 @@ namespace BaseUnitTestProject
         /// </summary>
         /// <returns>N/A</returns>
         [TestMethod]
-        //[Ignore]
+        [Ignore]
         [TestTraits(Trait.JsonCreate)]
         public async Task CreateJson()
         {
@@ -234,7 +239,7 @@ namespace BaseUnitTestProject
         }
 
         /// <summary>
-        /// Devoid of Entity Framework, shows plain Jane LINQ
+        /// Devoid of Entity Framework, shows plain Jane LINQ read from files
         /// </summary>
         [TestMethod]
         [TestTraits(Trait.NoInMemoryTesting)]
@@ -247,7 +252,11 @@ namespace BaseUnitTestProject
 
         }
 
+        /// <summary>
+        /// Test navigation properties with in-memory data
+        /// </summary>
         [TestMethod]
+        [TestTraits(Trait.InMemoryTestingRelations)]
         public void LoadingRelations()
         {
 
