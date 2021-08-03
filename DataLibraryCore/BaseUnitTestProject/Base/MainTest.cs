@@ -29,7 +29,7 @@ namespace BaseUnitTestProject
             .Options;
 
         /// <summary>
-        /// Single instance of the DbContext
+        /// Single instance of the <see cref="NorthWindContext"/> for in-memory context
         /// </summary>
         private NorthWindContext Context;
 
