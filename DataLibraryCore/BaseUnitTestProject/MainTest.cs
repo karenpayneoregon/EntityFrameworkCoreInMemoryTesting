@@ -1,10 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BaseUnitTestProject.Base;
 using BaseUnitTestProject.Classes;
 using DataLibraryCore.Contexts;
 using DataLibraryCore.Models;
+using DataLibraryCore.NorthWindOperations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static Microsoft.EntityFrameworkCore.EF;
@@ -147,13 +149,13 @@ namespace BaseUnitTestProject
 
         [TestMethod]
         [TestTraits(Trait.InMemoryTesting_CRUD)]
-        public void DeleteCustomer()
+        public void RemoveCustomerSetContactNotInUse()
         {
             const string findCompanyName = "Around the Horn";
 
             Context.Contact.AddRange(MockedContacts());
             Context.SaveChanges();
-            
+
             var singleCustomer = Context.Customers.FirstOrDefault(cust => cust.CompanyName == findCompanyName);
             var singleContact = Context.Contact.FirstOrDefault(con => con.ContactIdentifier == singleCustomer.ContactIdentifier);
 
@@ -174,7 +176,7 @@ namespace BaseUnitTestProject
                 singleContact = Context.Contact.FirstOrDefault(
                     con => con.ContactIdentifier == contactIdentifier);
 
-                
+
                 Assert.IsTrue(singleCustomer == null && singleContact.InUse == false);
                 Console.WriteLine();
 
@@ -183,8 +185,50 @@ namespace BaseUnitTestProject
 
         }
 
+        [TestMethod]
+        public void CustomerJoinTest()
+        {
+            using var context = new NorthWindContext();
+            
+            List<CustomerEntity> customerData = 
+            (
+                from customer in context.Customers
+                join contactType in context.ContactType on customer.ContactTypeIdentifier equals contactType.ContactTypeIdentifier
+                join contact in context.Contact on customer.ContactIdentifier equals contact.ContactIdentifier
+                join country in context.Countries on customer.CountryIdentfier equals country.Id
+                /*
+                 * Projection
+                 */
+                select new CustomerEntity
+                    {
+                        CustomerIdentifier = customer.CustomerIdentifier,
+                        CompanyName = customer.CompanyName,
+                        ContactIdentifier = customer.ContactIdentifier,
+                        FirstName = contact.FirstName,
+                        LastName = contact.LastName,
+                        ContactTypeIdentifier = contactType.ContactTypeIdentifier,
+                        ContactTitle = contactType.ContactTitle,
+                        Address = customer.Street,
+                        City = customer.City,
+                        PostalCode = customer.PostalCode,
+                        CountryIdentifier = customer.CountryIdentfier,
+                        CountyName = country.CountryName
+                    }
+                ).ToList();
 
+            Assert.IsTrue(customerData.Count == 98);
+        }
 
+        /// <summary>
+        /// Remove Ignore to create new json files.
+        /// </summary>
+        /// <returns>N/A</returns>
+        [TestMethod]
+        [Ignore]
+        public async Task CreateJson()
+        {
+            await Operations.SerializeModelsToJson();
+        }
 
     }
 }

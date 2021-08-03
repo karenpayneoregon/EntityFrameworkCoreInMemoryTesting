@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DataLibrary.Interfaces;
 using DataLibrary.Models;
-using EntityFrameworkCoreLikeLibrary.Models;
 using SimpleInjector;
 using SimpleInjector.Lifestyles;
 using Container = SimpleInjector.Container;
@@ -25,8 +24,7 @@ namespace SimpleInjectorWindowForm1
             InitializeComponent();
 
             CustomerContainer = new Container();
-            CustomerContainer
-                .Register<ICustomer, SqlCustomerData>(Lifestyle.Singleton);
+            CustomerContainer.Register<ICustomer, SqlCustomerData>(Lifestyle.Singleton);
 
             CustomerContainer.Verify();
         }
