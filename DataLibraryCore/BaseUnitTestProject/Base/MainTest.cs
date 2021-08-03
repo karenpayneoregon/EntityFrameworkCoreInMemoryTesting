@@ -116,7 +116,7 @@ namespace BaseUnitTestProject
             /*
              * in-memory does not support HasDefaultValueSql
              */
-            singleCustomer.ModifiedDate = DateTime.Now;
+            singleCustomer.ModifiedDate = new DateTime(2021, 2, 12);
             
 
             Context.Customers.Add(singleCustomer);

@@ -19,7 +19,8 @@ namespace BaseUnitTestProject.Base
         InMemoryTesting_CRUD,
         NoInMemoryTesting,
         JsonCreate,
-        InMemoryTestingRelations
+        InMemoryTestingRelations,
+        InMemoryTestingCreateCustomer
     }
     /// <summary>
     /// Declarative class for using Trait enum about for traits on test method.

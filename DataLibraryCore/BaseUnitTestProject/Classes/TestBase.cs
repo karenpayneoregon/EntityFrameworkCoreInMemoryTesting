@@ -58,23 +58,19 @@ namespace BaseUnitTestProject.Classes
         /// strange things happen, will look deeper into this.
         /// </summary>
         /// <returns></returns>
-        public List<Contact> PrepareContacts()
+        public new List<Contact> PrepareContacts()
         {
             
             var options = new DbContextOptionsBuilder<NorthWindContext>()
                 .UseInMemoryDatabase(databaseName: "Add_Contacts_to_database")
                 .Options;
 
-            using (var context = new NorthWindContext(options))
-            {
+            using var context = new NorthWindContext(options);
+            context.Database.EnsureDeleted();
+            context.Contact.AddRange(MockedContacts());
+            context.SaveChanges();
 
-                context.Database.EnsureDeleted();
-                context.Contact.AddRange(MockedContacts());
-                context.SaveChanges();
-
-                return context.Contact.ToList();
-
-            }
+            return context.Contact.ToList();
         }
 
          
@@ -98,52 +94,50 @@ namespace BaseUnitTestProject.Classes
                     .UseInMemoryDatabase(databaseName: "Remove_Customer_to_database")
                     .Options;
 
-                using (var context = new NorthWindContext(options))
-                {
-                    /*
+                using var context = new NorthWindContext(options);
+                /*
                      * Mock-up tables
                      */
-                    context.Customers.AddRange(MockedInMemoryCustomers());
+                context.Customers.AddRange(MockedInMemoryCustomers());
                     
 
-                    context.Contact.AddRange(PrepareContacts());
-                    context.SaveChanges();
+                context.Contact.AddRange(PrepareContacts());
+                context.SaveChanges();
 
-                    /*
+                /*
                      * Find customer and contact
                      */
-                    var customer = context.Customers.FirstOrDefault(
+                var customer = context.Customers.FirstOrDefault(
+                    cust => cust.CompanyName == "Around the Horn");
+
+
+                var contactList = context.Contact.Where(x => x.ContactIdentifier < 20).ToList();
+                var contact = context.Contact.FirstOrDefault(
+                    con => con.ContactIdentifier == customer.ContactIdentifier);
+
+                if (contact != null)
+                {
+                    var contactIdentifier = contact.ContactIdentifier;
+
+                    context.Entry(customer).State = EntityState.Modified;
+
+                    context.SaveChanges();
+
+                    context.Customers.Remove(customer);
+                    contact.InUse = false;
+
+                    context.SaveChanges();
+
+                    customer = context.Customers.FirstOrDefault(
                         cust => cust.CompanyName == "Around the Horn");
 
-
-                    var contactList = context.Contact.Where(x => x.ContactIdentifier < 20).ToList();
-                    var contact = context.Contact.FirstOrDefault(
-                        con => con.ContactIdentifier == customer.ContactIdentifier);
-
-                    if (contact != null)
-                    {
-                        var contactIdentifier = contact.ContactIdentifier;
-
-                        context.Entry(customer).State = EntityState.Modified;
-
-                        context.SaveChanges();
-
-                        context.Customers.Remove(customer);
-                        contact.InUse = false;
-
-                        context.SaveChanges();
-
-                        customer = context.Customers.FirstOrDefault(
-                            cust => cust.CompanyName == "Around the Horn");
-
-                        contact = context.Contact.FirstOrDefault(
-                            con => con.ContactIdentifier == contactIdentifier);
-                    }
-
-                    return customer == null && contact.InUse == false;
+                    contact = context.Contact.FirstOrDefault(
+                        con => con.ContactIdentifier == contactIdentifier);
                 }
+
+                return customer == null && contact.InUse == false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }

@@ -271,10 +271,21 @@ namespace BaseUnitTestProject
             Assert.AreEqual(singleCustomer.ContactIdentifierNavigation.LastName, "Moos");
         }
 
+        /// <summary>
+        /// Create a single customer
+        /// Modified date is not auto generated as in memory testing does not provide this functionality
+        /// </summary>
         [TestMethod]
+        [TestTraits(Trait.InMemoryTestingCreateCustomer)]
         public void CreateCustomer()
         {
             var customer = MockSingleCustomer();
+            
+            Assert.IsTrue(customer.CustomerIdentifier == 1);
+            Assert.IsTrue(customer.CompanyName == "Karen's Coffee shop");
+            Assert.IsNotNull(customer.ContactIdentifierNavigation);
+            Assert.IsNotNull(customer.ContactTypeIdentifierNavigation);
+            Assert.IsNotNull(customer.CountryIdentfierNavigation);
         }
 
     }
