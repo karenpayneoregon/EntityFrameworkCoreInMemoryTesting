@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<LangVersion>9.0</LangVersion>
@@ -11,6 +11,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Content Include="bin\Debug\net5.0\Json\Contacts.json" />
+	  <Content Include="bin\Debug\net5.0\Json\ContactType.json" />
+	  <Content Include="bin\Debug\net5.0\Json\Countries.json" />
+	  <Content Include="bin\Debug\net5.0\Json\Customers.json" />
 	  <Content Include="contacts.txt" />
 	</ItemGroup>
 

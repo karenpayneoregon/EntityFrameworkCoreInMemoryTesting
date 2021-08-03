@@ -44,6 +44,7 @@ namespace BaseUnitTestProject
             return contacts;
 
         }
+
         
         /// <summary>
         /// Code to run before each test method
@@ -56,7 +57,7 @@ namespace BaseUnitTestProject
             
             Context = new NorthWindContext(dbContextOptions);
             
-            if (TestContext.TestName != nameof(CustomersUpdateTest))
+            if (TestContext.TestName != nameof(CustomersUpdateTest) && TestContext.TestName != nameof(CreateCustomer))
             {
                 Context.Customers.AddRange(MockedData.MockedInMemoryCustomers());
                 Context.SaveChanges();
@@ -75,29 +76,78 @@ namespace BaseUnitTestProject
             TestResults = new List<TestContext>();
         }
 
+        #region Json files
         private static readonly string customersJsonFileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Json", "Customers.json");
         private static readonly string contactTypeJsonFileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Json", "ContactType.json");
         private static readonly string contactsJsonFileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Json", "Contacts.json");
         private static readonly string countriesJsonFileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Json", "Countries.json");
+        #endregion
 
+
+        protected Customer MockSingleCustomer()
+        {
+            var customersList = CustomersContactCountries(out var contactTypeList, out var contactList, out var countriesList);
+
+            var customer = customersList.FirstOrDefault();
+            var contact = contactList.FirstOrDefault();
+            var country = countriesList.Skip(2).FirstOrDefault();
+            var contactType = contactTypeList.Skip(3).FirstOrDefault();
+
+
+            Customer singleCustomer = new Customer();
+
+            singleCustomer.CountryIdentfier = 8;
+            singleCustomer.CompanyName = "Karen's Coffee shop";
+            singleCustomer.Street = customer.Street;
+            singleCustomer.City = customer.City;
+            singleCustomer.PostalCode = customer.PostalCode;
+            singleCustomer.CountryIdentfierNavigation = country;
+            singleCustomer.CountryIdentfier = country.Id;
+
+            singleCustomer.ContactIdentifierNavigation = contact;
+            singleCustomer.FirstName = contact.FirstName;
+            singleCustomer.LastName = contact.LastName;
+            singleCustomer.ContactIdentifier = contact.ContactIdentifier;
+            singleCustomer.ContactTypeIdentifierNavigation = contactType;
+            singleCustomer.ContactTypeIdentifier = contactType.ContactTypeIdentifier;
+            
+            singleCustomer.InUse = true;
+
+            /*
+             * in-memory does not support HasDefaultValueSql
+             */
+            singleCustomer.ModifiedDate = DateTime.Now;
+            
+
+            Context.Customers.Add(singleCustomer);
+            Context.SaveChanges();
+
+            return singleCustomer;
+
+        }
         public void LoadJoinedData()
         {
             Context = new NorthWindContext(dbContextOptions);
             
-            List<Customer> customersList = JsonConvert.DeserializeObject<List<Customer>>(File.ReadAllText(customersJsonFileName));
-            List<ContactType> contactTypeList = JsonConvert.DeserializeObject<List<ContactType>>(File.ReadAllText(contactTypeJsonFileName));
-            List<Contact> contactList = JsonConvert.DeserializeObject<List<Contact>>(File.ReadAllText(contactsJsonFileName));
-            List<Countries> countriesList = JsonConvert.DeserializeObject<List<Countries>>(File.ReadAllText(countriesJsonFileName));
+            var customersList = CustomersContactCountries(out var contactTypeList, out var contactList, out var countriesList);
 
-            Context.Customers.AddRange(customersList);
-            Context.ContactType.AddRange(contactTypeList);
-            Context.Contact.AddRange(contactList);
-            Context.Countries.AddRange(countriesList);
+            Context.Customers.AddRange(customersList!);
+            Context.ContactType.AddRange(contactTypeList!);
+            Context.Contact.AddRange(contactList!);
+            Context.Countries.AddRange(countriesList!);
             
             var count = Context.SaveChanges();
 
         }
 
+        private static List<Customer> CustomersContactCountries(out List<ContactType> contactTypeList, out List<Contact> contactList, out List<Countries> countriesList)
+        {
+            List<Customer> customersList = JsonConvert.DeserializeObject<List<Customer>>(File.ReadAllText(customersJsonFileName));
+            contactTypeList = JsonConvert.DeserializeObject<List<ContactType>>(File.ReadAllText(contactTypeJsonFileName));
+            contactList = JsonConvert.DeserializeObject<List<Contact>>(File.ReadAllText(contactsJsonFileName));
+            countriesList = JsonConvert.DeserializeObject<List<Countries>>(File.ReadAllText(countriesJsonFileName));
+            return customersList;
+        }
     }
 
 }

@@ -271,7 +271,11 @@ namespace BaseUnitTestProject
             Assert.AreEqual(singleCustomer.ContactIdentifierNavigation.LastName, "Moos");
         }
 
-
+        [TestMethod]
+        public void CreateCustomer()
+        {
+            var customer = MockSingleCustomer();
+        }
 
     }
 }
