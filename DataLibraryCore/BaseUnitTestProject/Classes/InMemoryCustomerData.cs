@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using DataLibraryCore.Contexts;
 using DataLibraryCore.Interfaces;
+using DataLibraryCore.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace DataLibraryCore.Models
+namespace BaseUnitTestProject.Classes
 {
     public class InMemoryCustomerData : ICustomer
     {

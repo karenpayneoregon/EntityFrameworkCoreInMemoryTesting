@@ -16,7 +16,9 @@ namespace BaseUnitTestProject.Base
         /// </summary>
         ReadDataTesting,
         ReadDataLike,
-        InMemoryTesting_CRUD
+        InMemoryTesting_CRUD,
+        NoInMemoryTesting,
+        JsonCreate
     }
     /// <summary>
     /// Declarative class for using Trait enum about for traits on test method.

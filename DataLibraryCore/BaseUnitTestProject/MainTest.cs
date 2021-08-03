@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using BaseUnitTestProject.Base;
 using BaseUnitTestProject.Classes;
+using BaseUnitTestProject.Classes.NorthClasses;
 using DataLibraryCore.Contexts;
 using DataLibraryCore.Models;
 using DataLibraryCore.NorthWindOperations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static Microsoft.EntityFrameworkCore.EF;
+using CustomerEntity = DataLibraryCore.Models.CustomerEntity;
 using TestBase = BaseUnitTestProject.Base.TestBase;
 
 namespace BaseUnitTestProject
@@ -224,11 +226,43 @@ namespace BaseUnitTestProject
         /// </summary>
         /// <returns>N/A</returns>
         [TestMethod]
-        [Ignore]
+        //[Ignore]
+        [TestTraits(Trait.JsonCreate)]
         public async Task CreateJson()
         {
             await Operations.SerializeModelsToJson();
         }
+
+        /// <summary>
+        /// Devoid of Entity Framework, shows plain Jane LINQ
+        /// </summary>
+        [TestMethod]
+        [TestTraits(Trait.NoInMemoryTesting)]
+        public void ReadCustomersFromJson()
+        {
+            var joinList = MockedData1.ReadCustomersWithJoins();
+            Assert.IsTrue(joinList.All(customerEntity => customerEntity.Contact is not null));
+            Assert.IsTrue(joinList.All(customerEntity => customerEntity.ContactTypeNavigation is not null));
+            Assert.IsTrue(joinList.All(customerEntity => customerEntity.LastName is not null));
+
+        }
+
+        [TestMethod]
+        public void LoadingRelations()
+        {
+
+            var singleCustomer = Context.Customers
+                .Include(customer => customer.CountryIdentfierNavigation)
+                .Include(customer => customer.ContactIdentifierNavigation)
+                .FirstOrDefault(customer => customer.CustomerIdentifier == 5);
+            
+            Assert.AreEqual(singleCustomer.CompanyName, "Blauer See Delikatessen");
+            Assert.AreEqual(singleCustomer.CountryIdentfierNavigation.CountryName, "Germany");
+            Assert.AreEqual(singleCustomer.ContactIdentifierNavigation.FirstName, "Hanna");
+            Assert.AreEqual(singleCustomer.ContactIdentifierNavigation.LastName, "Moos");
+        }
+
+
 
     }
 }

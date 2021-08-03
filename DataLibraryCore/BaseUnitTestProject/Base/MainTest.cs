@@ -62,6 +62,11 @@ namespace BaseUnitTestProject
                 Context.SaveChanges();
             }
 
+            if (TestContext.TestName == nameof(LoadingRelations))
+            {
+                LoadJoinedData();
+            }
+
         }
 
         [ClassInitialize()]
@@ -69,6 +74,30 @@ namespace BaseUnitTestProject
         {
             TestResults = new List<TestContext>();
         }
+
+        private static readonly string customersJsonFileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Json", "Customers.json");
+        private static readonly string contactTypeJsonFileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Json", "ContactType.json");
+        private static readonly string contactsJsonFileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Json", "Contacts.json");
+        private static readonly string countriesJsonFileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Json", "Countries.json");
+
+        public void LoadJoinedData()
+        {
+            Context = new NorthWindContext(dbContextOptions);
+            
+            List<Customer> customersList = JsonConvert.DeserializeObject<List<Customer>>(File.ReadAllText(customersJsonFileName));
+            List<ContactType> contactTypeList = JsonConvert.DeserializeObject<List<ContactType>>(File.ReadAllText(contactTypeJsonFileName));
+            List<Contact> contactList = JsonConvert.DeserializeObject<List<Contact>>(File.ReadAllText(contactsJsonFileName));
+            List<Countries> countriesList = JsonConvert.DeserializeObject<List<Countries>>(File.ReadAllText(countriesJsonFileName));
+
+            Context.Customers.AddRange(customersList);
+            Context.ContactType.AddRange(contactTypeList);
+            Context.Contact.AddRange(contactList);
+            Context.Countries.AddRange(countriesList);
+            
+            var count = Context.SaveChanges();
+
+        }
+
     }
 
 }

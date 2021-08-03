@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Newtonsoft.Json;
 
 namespace DataLibraryCore.Models
 {
@@ -21,6 +22,7 @@ namespace DataLibraryCore.Models
 
         #endregion
 
+        [JsonIgnore]
         public int CustomerIdentifier { get; set; }
 
         public string CompanyName
@@ -136,6 +138,7 @@ namespace DataLibraryCore.Models
         }
 
         public Countries CountryNavigation { get; set; }
+        public virtual Contact ContactIdentifierNavigation { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
