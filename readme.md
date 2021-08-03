@@ -2,6 +2,10 @@
 
 :green_circle: Code samples showing basics of in memory unit testing
 
+# Solution structure
+
+There was a mishap when performing an experiment which messed up where several projects got created. Even so, all code works as expected. To fix the folder structure would require more work than any benefits so the folder structure remains as is.
+
 ### Dependency injection
 While in `ASP.NET` in memory test is rather easy as dependency injection is done in Startup.cs in ConfigureServices there is no configure service event in windows forms so developers must using a library such as [Simple Injector](https://simpleinjector.readthedocs.io/en/latest/index.html) to setup dependence injection as done in SimpleInjectorWindowsForms1 windows form project.
 
